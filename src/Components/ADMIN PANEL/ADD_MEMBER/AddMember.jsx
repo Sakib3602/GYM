@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import axios from "axios";
-import { useState } from "react"
+import { useState } from "react";
 import {
   FaUser,
   FaPhone,
@@ -12,16 +12,21 @@ import {
   FaTimes,
   FaUserPlus,
   FaFileAlt,
-} from "react-icons/fa"
+} from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AddMember() {
   const [img, setImg] = useState(null); // Store selected image file
-
+  const [img2, setImg2] = useState(null); // Store selected image file
+  const [load, setLoad] = useState(false);
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!img) {
+      return alert("Please select an image to upload.");
+    }
+    if (!img2) {
       return alert("Please select an image to upload.");
     }
 
@@ -33,32 +38,48 @@ export default function AddMember() {
     cloudData.append("file", img);
     cloudData.append("upload_preset", "ng_fitness_gym");
     cloudData.append("cloud_name", "dpwuivub7");
+    // === Uploading image to Cloudinary ===
+    const cloudData2 = new FormData();
+    cloudData2.append("file", img2);
+    cloudData2.append("upload_preset", "ng_fitness_gym");
+    cloudData2.append("cloud_name", "dpwuivub7");
 
     try {
-      const response = await axios.post("https://api.cloudinary.com/v1_1/dpwuivub7/image/upload", cloudData);
+      setLoad(true)
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dpwuivub7/image/upload",
+        cloudData
+      );
       const imageUrl = response.data.secure_url; // ✅ Get uploaded image URL
-      console.log(imageUrl,"kkkkkkkkkkkkkkkkkkkkk")
+      const response2 = await axios.post(
+        "https://api.cloudinary.com/v1_1/dpwuivub7/image/upload",
+        cloudData2
+      );
+      const imageUrl2 = response2.data.secure_url; // ✅ Get uploaded image URL
+      setLoad(false);
+      console.log(imageUrl, "1111");
+      console.log(imageUrl2, "2222");
       // === Prepare the final form data ===
-      const formData = {
-        name: data.get("name"),
-        phone: data.get("phone"),
-        address: data.get("address"),
-        responsiblePerson: data.get("responsiblePerson"),
-        responsiblePersonNumber: data.get("responsiblePersonNumber"),
-        memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
-        memberSheet: data.get("memberSheet")?.name || null, // Only get file name (optional)
-      };
+      // const formData = {
+      //   name: data.get("name"),
+      //   phone: data.get("phone"),
+      //   address: data.get("address"),
+      //   responsiblePerson: data.get("responsiblePerson"),
+      //   responsiblePersonNumber: data.get("responsiblePersonNumber"),
+      //   memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
+      //   memberSheet: imageUrl2,
+      // };
 
       // ✅ You can now send this `formData` to your database or server
-      console.log("Final Form Data:", formData);
-      alert("Member added successfully!");
+      // console.log("Final Form Data:", formData);
+      toast("Member added successfully!")
+     
 
       form.reset(); // Optional: Reset the form after submission
       setImg(null); // Reset the image state
-
     } catch (error) {
       console.error("Upload error:", error);
-      alert("Image upload failed.");
+      toast("Image upload failed.")
     }
   };
 
@@ -71,15 +92,23 @@ export default function AddMember() {
             <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
               <FaUserPlus className="w-6 h-6 text-white" />
             </div>
+            <ToastContainer></ToastContainer>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Add New Member</h1>
-              <p className="text-gray-600 text-base">Fill in the member details below</p>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Add New Member
+              </h1>
+              <p className="text-gray-600 text-base">
+                Fill in the member details below
+              </p>
             </div>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm p-6">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white rounded-lg shadow-sm p-6"
+        >
           <div className="space-y-6">
             {/* Name */}
             <div>
@@ -178,6 +207,7 @@ export default function AddMember() {
                 </label>
                 <input
                   type="file"
+                  onChange={(e) => setImg2(e.target.files[0])}
                   name="memberSheet"
                   accept="image/*,.pdf,.doc,.docx"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
@@ -187,7 +217,19 @@ export default function AddMember() {
           </div>
 
           {/* Submit Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
+          {load ? (
+            <>
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <div className="flex justify-center items-center ">
+                  <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
+                  <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>
+                  <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-blue-500 ml-3"></div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+            <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <button
               type="submit"
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
@@ -195,23 +237,23 @@ export default function AddMember() {
               <FaSave className="w-5 h-5" />
               <span>Save Member</span>
             </button>
-            <button
-              type="button"
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
-              onClick={() => alert("Canceled")}
-            >
-              <FaTimes className="w-5 h-5" />
-              <span>Cancel</span>
-            </button>
           </div>
+            
+            </>
+          )}
+          
         </form>
 
         {/* Notes */}
         <div className="bg-blue-50 rounded-lg p-4 mt-6">
-          <h3 className="text-sm font-medium text-blue-900 mb-2">Important Notes:</h3>
+          <h3 className="text-sm font-medium text-blue-900 mb-2">
+            Important Notes:
+          </h3>
           <ul className="text-sm text-blue-800 list-disc ml-5 space-y-1">
             <li>Only Name, Phone Number, and Member Photo are required</li>
-            <li>Member photo helps with identification (uploaded to Cloudinary)</li>
+            <li>
+              Member photo helps with identification (uploaded to Cloudinary)
+            </li>
             <li>Member sheet is optional and stored as a file name for now</li>
           </ul>
         </div>

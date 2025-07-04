@@ -25,6 +25,7 @@ export default function HomeDash() {
     { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
     { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
     { to: "/admin/reports", icon: <FaClipboardList />, text: "Reports" },
+    { to: "#", icon: <FaSignOutAlt />, text: "Log Out" },
   ];
 
   return (
@@ -80,12 +81,7 @@ export default function HomeDash() {
           ))}
         </nav>
 
-        <div className="absolute bottom-4 w-full px-5">
-          <button className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-red-500 transition-all">
-            <FaSignOutAlt />
-            Logout
-          </button>
-        </div>
+        
       </aside>
 
       {/* Main Content */}
