@@ -1,6 +1,4 @@
-
-
-import { useState } from "react"
+import { useState } from "react";
 
 import {
   FaUsers,
@@ -13,22 +11,21 @@ import {
   FaBars,
   FaTimes,
   FaBell,
-} from "react-icons/fa"
-import { NavLink, Outlet, useLocation } from "react-router"
+} from "react-icons/fa";
+import { NavLink, Outlet, useLocation } from "react-router";
 
 export default function HomeDash() {
-    const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
- const links = [
-  { to: "/admin", icon: <FaHome />, text: "Dashboard" },
-  { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
-  { to: "/admin/classes", icon: <FaDumbbell />, text: "Classes" },
-  { to: "/admin/trainers", icon: <FaUserTie />, text: "Trainers" },
-  { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
-  { to: "/admin/reports", icon: <FaClipboardList />, text: "Reports" },
-];
-
+  const links = [
+    { to: "/admin", icon: <FaHome />, text: "Dashboard" },
+    { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
+    { to: "/admin/classes", icon: <FaDumbbell />, text: "Classes" },
+    { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
+    { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
+    { to: "/admin/reports", icon: <FaClipboardList />, text: "Reports" },
+  ];
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -43,11 +40,15 @@ export default function HomeDash() {
       {/* Sidebar */}
       <aside
         className={`fixed top-0 left-0 z-30 w-64 min-h-screen bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static`}
+        ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 lg:static`}
       >
         <div className="p-5  flex items-center justify-between">
-         
-          <button onClick={() => setIsOpen(false)} className="lg:hidden text-gray-600">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="lg:hidden text-gray-600"
+          >
             <FaTimes size={20} />
           </button>
         </div>
@@ -101,32 +102,59 @@ export default function HomeDash() {
         </div>
 
         {location.pathname === "/admin" && (
-  <div className="m-4">
-    <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg sm:rounded-xl lg:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 text-white w-full">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
-        <div className="flex-1 min-w-0">
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 leading-tight">
-            Welcome back, Nitto!
-          </h1>
-          <p className="text-blue-100 text-sm sm:text-base md:text-lg lg:text-xl mb-1 sm:mb-2">
-            Here's a quick overview of your gym today
-          </p>
-          <p className="text-blue-200 text-xs sm:text-sm md:text-base">
-            {new Date().toLocaleDateString("en-US", {
-              weekday: "long",
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-        </div>
+          <div className="m-4">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg sm:rounded-xl lg:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-10 text-white w-full">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 leading-tight">
+                    Welcome back, Nitto!
+                  </h1>
+                  <p className="text-blue-100 text-sm sm:text-base md:text-lg lg:text-xl mb-1 sm:mb-2">
+                    Here's a quick overview of your gym today
+                  </p>
+                  <p className="text-blue-200 text-xs sm:text-sm md:text-base">
+                    {new Date().toLocaleDateString("en-US", {
+                      weekday: "long",
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
-      </div>
-    </div>
-  </div>
-)}
+        {location.pathname === "/admin" && (
+          <div className="p-4">
+            <div className="flex flex-col lg:flex-row gap-4">
+              {/* Total Members Card */}
+              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-blue-500">
+                <h2 className="text-gray-600 text-sm font-semibold mb-2">
+                  Total Members
+                </h2>
+                <p className="text-3xl font-bold text-blue-600">150</p>
+              </div>
 
-        
+              {/* Total Complaints Card */}
+              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-red-500">
+                <h2 className="text-gray-600 text-sm font-semibold mb-2">
+                  Total Complaints
+                </h2>
+                <p className="text-3xl font-bold text-red-600">7</p>
+              </div>
+
+              {/* Total Reviews Card */}
+              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-green-500">
+                <h2 className="text-gray-600 text-sm font-semibold mb-2">
+                  Total Reviews
+                </h2>
+                <p className="text-3xl font-bold text-green-600">85</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Page Content */}
         <div className="p-2">
@@ -134,5 +162,5 @@ export default function HomeDash() {
         </div>
       </main>
     </div>
-  )
+  );
 }
