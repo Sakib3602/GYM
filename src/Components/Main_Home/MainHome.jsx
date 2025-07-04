@@ -8,10 +8,11 @@ import Trainers from '../Trainer/Trainers';
 import Gellary from '../Gellary/Gellary';
 import Price from '../Deal/Price';
 import Contact from '../Contact/Contact';
+import Footer from '../Footer/Footer';
 
 const MainHome = () => {
     return (
-        <div className=''>
+        <div className='overflow-hidden'>
             <Nav></Nav>
             <Sli></Sli>
             <Second_page></Second_page>
@@ -19,8 +20,12 @@ const MainHome = () => {
             <Services></Services>
             <Trainers></Trainers>
             <Gellary></Gellary>
+            <Contact></Contact>
             <Price></Price>
-            {/* <Contact></Contact> */}
+
+
+
+            <Footer></Footer>
         </div>
     );
 };

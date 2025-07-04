@@ -4,7 +4,7 @@ import Headroom from 'react-headroom';
 const Nav = () => {
   return (
    <Headroom >
-     <div className="navbar shadow-2xl h-24 text-black lg:px-16 font-extrabold z-50">
+     <div className="navbar shadow-2xl h-24 text-black lg:px-16 font-extrabold z-50 backdrop-blur-md">
       {/* Left side (Logo and dropdown for mobile) */}
       <div className="navbar">
         {/* Mobile Dropdown */}
@@ -47,7 +47,7 @@ const Nav = () => {
                <a href="#price">MemberShip Plan</a>
             </li>
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
-               <a >Contact</a>
+               <a href="#contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -95,7 +95,7 @@ const Nav = () => {
             data-aos="fade-down"
             className="hover:text-[#7F22FE] transition-colors duration-200"
           >
-            <a >Contact</a>
+            <a href="#contact">Contact</a>
           </li>
         </ul>
       </div>
