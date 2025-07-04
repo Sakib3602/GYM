@@ -41,7 +41,7 @@ export default function Contact() {
                 href="mailto:info@powergym.com"
                 className="inline-block px-6 py-2 border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white bg-transparent rounded-md transition-all duration-300 font-medium"
               >
-                info@powergym.com
+                info@ngfitness.com
               </a>
             </div>
           </div>

@@ -4,7 +4,7 @@ import Headroom from 'react-headroom';
 const Nav = () => {
   return (
    <Headroom >
-     <div className="navbar shadow-2xl h-24 text-black lg:px-16 font-extrabold z-50 backdrop-blur-md">
+     <div className="navbar shadow-2xl h-24 text-black lg:px-16 font-extrabold z-50 backdrop-blur-sm">
       {/* Left side (Logo and dropdown for mobile) */}
       <div className="navbar">
         {/* Mobile Dropdown */}

@@ -1,5 +1,7 @@
 "use client"
 
+import axios from "axios";
+import { useState } from "react"
 import {
   FaUser,
   FaPhone,
@@ -11,211 +13,209 @@ import {
   FaUserPlus,
   FaFileAlt,
 } from "react-icons/fa"
-import { useState } from "react"
 
 export default function AddMember() {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    responsiblePerson: "",
-    responsiblePersonNumber: "",
-    memberPhoto: null,
-    memberSheet: null,
-  })
+  const [img, setImg] = useState(null); // Store selected image file
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleFileChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.files[0],
-    })
-  }
+    if (!img) {
+      return alert("Please select an image to upload.");
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Handle form submission here
-  }
+    const form = e.target;
+    const data = new FormData(form); // Collect all form inputs
+
+    // === Uploading image to Cloudinary ===
+    const cloudData = new FormData();
+    cloudData.append("file", img);
+    cloudData.append("upload_preset", "ng_fitness_gym");
+    cloudData.append("cloud_name", "dpwuivub7");
+
+    try {
+      const response = await axios.post("https://api.cloudinary.com/v1_1/dpwuivub7/image/upload", cloudData);
+      const imageUrl = response.data.secure_url; // ✅ Get uploaded image URL
+      console.log(imageUrl,"kkkkkkkkkkkkkkkkkkkkk")
+      // === Prepare the final form data ===
+      const formData = {
+        name: data.get("name"),
+        phone: data.get("phone"),
+        address: data.get("address"),
+        responsiblePerson: data.get("responsiblePerson"),
+        responsiblePersonNumber: data.get("responsiblePersonNumber"),
+        memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
+        memberSheet: data.get("memberSheet")?.name || null, // Only get file name (optional)
+      };
+
+      // ✅ You can now send this `formData` to your database or server
+      console.log("Final Form Data:", formData);
+      alert("Member added successfully!");
+
+      form.reset(); // Optional: Reset the form after submission
+      setImg(null); // Reset the image state
+
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Image upload failed.");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2 sm:px-4 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center">
-              <FaUserPlus className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+              <FaUserPlus className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Add New Member</h1>
-              <p className="text-gray-600 text-sm sm:text-base">Fill in the member details below</p>
+              <h1 className="text-2xl font-bold text-gray-900">Add New Member</h1>
+              <p className="text-gray-600 text-base">Fill in the member details below</p>
             </div>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg sm:rounded-xl shadow-sm p-4 sm:p-6 lg:p-8">
-          {/* Form Fields */}
-          <div className="space-y-4 sm:space-y-6">
-            {/* Name Field */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-sm p-6">
+          <div className="space-y-6">
+            {/* Name */}
             <div>
-              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                <FaUser className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <FaUser className="inline mr-2" />
                 Full Name *
               </label>
               <input
                 type="text"
                 name="name"
-                value={formData.name}
-                onChange={handleInputChange}
                 required
-                className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base"
-                placeholder="Enter member's full name"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                placeholder="Enter full name"
               />
             </div>
 
-            {/* Phone Field */}
+            {/* Phone */}
             <div>
-              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                <FaPhone className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <FaPhone className="inline mr-2" />
                 Phone Number *
               </label>
               <input
                 type="tel"
                 name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
                 required
-                className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base"
-                placeholder="+1 (555) 123-4567"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                placeholder="+8801XXXXXXXXX"
               />
             </div>
 
-            {/* Address Field */}
+            {/* Address */}
             <div>
-              <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                <FaMapMarkerAlt className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <FaMapMarkerAlt className="inline mr-2" />
                 Address
               </label>
               <textarea
                 name="address"
-                value={formData.address}
-                onChange={handleInputChange}
                 rows="3"
-                className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm resize-none"
                 placeholder="Enter complete address"
               ></textarea>
             </div>
 
-            {/* Responsible Person Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Responsible Person Name */}
+            {/* Responsible Person */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                  <FaUserTie className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <FaUserTie className="inline mr-2" />
                   Responsible Person
                 </label>
                 <input
                   type="text"
                   name="responsiblePerson"
-                  value={formData.responsiblePerson}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                   placeholder="Emergency contact name"
                 />
               </div>
-
-              {/* Responsible Person Number */}
               <div>
-                <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                  <FaPhone className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <FaPhone className="inline mr-2" />
                   Responsible Person Number
                 </label>
                 <input
                   type="tel"
                   name="responsiblePersonNumber"
-                  value={formData.responsiblePersonNumber}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base"
-                  placeholder="+1 (555) 987-6543"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                  placeholder="+8801XXXXXXXXX"
                 />
               </div>
             </div>
 
-            {/* File Upload Fields */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {/* Member Photo Upload */}
+            {/* File Uploads */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Image Upload */}
               <div>
-                <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                  <FaCamera className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                  Member Photo
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <FaCamera className="inline mr-2" />
+                  Member Photo *
                 </label>
                 <input
                   type="file"
-                  name="memberPhoto"
                   accept="image/*"
-                  onChange={handleFileChange}
-                  className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  required
+                  onChange={(e) => setImg(e.target.files[0])} // ✅ Fixed: handle image input properly
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                 />
-                <p className="text-xs sm:text-sm text-gray-500 mt-2">JPG, PNG or GIF (max. 5MB)</p>
               </div>
 
-              {/* Member Sheet Upload */}
+              {/* Document Upload */}
               <div>
-                <label className="block text-sm sm:text-base font-medium text-gray-700 mb-2 sm:mb-3">
-                  <FaFileAlt className="inline w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <FaFileAlt className="inline mr-2" />
                   Member Sheet
                 </label>
                 <input
                   type="file"
                   name="memberSheet"
                   accept="image/*,.pdf,.doc,.docx"
-                  onChange={handleFileChange}
-                  className="w-full px-3 py-3 sm:px-4 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-sm sm:text-base file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                  className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />
-                <p className="text-xs sm:text-sm text-gray-500 mt-2">PDF, DOC, DOCX or Image (max. 10MB)</p>
               </div>
             </div>
           </div>
 
-          {/* Form Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-8">
+          {/* Submit Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <button
               type="submit"
-              className="flex-1 sm:flex-none sm:px-8 py-3 sm:py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
             >
-              <FaSave className="w-4 h-4 sm:w-5 sm:h-5" />
+              <FaSave className="w-5 h-5" />
               <span>Save Member</span>
             </button>
             <button
               type="button"
-              className="flex-1 sm:flex-none sm:px-8 py-3 sm:py-4 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base"
+              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
+              onClick={() => alert("Canceled")}
             >
-              <FaTimes className="w-4 h-4 sm:w-5 sm:h-5" />
+              <FaTimes className="w-5 h-5" />
               <span>Cancel</span>
             </button>
           </div>
         </form>
 
-        {/* Additional Info */}
-        <div className="bg-blue-50 rounded-lg sm:rounded-xl p-4 sm:p-6 mt-4 sm:mt-6">
-          <h3 className="text-sm sm:text-base font-medium text-blue-900 mb-2">Important Notes:</h3>
-          <ul className="text-xs sm:text-sm text-blue-800 space-y-1">
-            <li>• Only Name and Phone Number are required fields</li>
-            <li>• Member photo helps with identification</li>
-            <li>• Member sheet can include registration forms, medical info, etc.</li>
-            <li>• Responsible person details are for emergency contact</li>
-            <li>• All other fields are optional but recommended</li>
+        {/* Notes */}
+        <div className="bg-blue-50 rounded-lg p-4 mt-6">
+          <h3 className="text-sm font-medium text-blue-900 mb-2">Important Notes:</h3>
+          <ul className="text-sm text-blue-800 list-disc ml-5 space-y-1">
+            <li>Only Name, Phone Number, and Member Photo are required</li>
+            <li>Member photo helps with identification (uploaded to Cloudinary)</li>
+            <li>Member sheet is optional and stored as a file name for now</li>
           </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
