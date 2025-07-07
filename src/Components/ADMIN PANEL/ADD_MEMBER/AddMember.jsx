@@ -14,6 +14,7 @@ import {
 } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import useAxiosPublic from "../../AXIOS/useAxiosPublic";
+import moment from "moment/moment";
 
 export default function AddMember() {
   const [img, setImg] = useState(null); // Store selected image file
@@ -68,6 +69,7 @@ export default function AddMember() {
         responsiblePersonNumber: data.get("responsiblePersonNumber"),
         memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
         memberSheet: imageUrl2,
+        admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a')
       };
       console.log(formData)
 
