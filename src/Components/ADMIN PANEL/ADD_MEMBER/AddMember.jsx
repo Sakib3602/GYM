@@ -1,5 +1,4 @@
-"use client";
-
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import {
@@ -14,6 +13,7 @@ import {
   FaFileAlt,
 } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
+import useAxiosPublic from "../../AXIOS/useAxiosPublic";
 
 export default function AddMember() {
   const [img, setImg] = useState(null); // Store selected image file
@@ -45,7 +45,7 @@ export default function AddMember() {
     cloudData2.append("cloud_name", "dpwuivub7");
 
     try {
-      setLoad(true)
+      setLoad(true);
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dpwuivub7/image/upload",
         cloudData
@@ -60,29 +60,42 @@ export default function AddMember() {
       console.log(imageUrl, "1111");
       console.log(imageUrl2, "2222");
       // === Prepare the final form data ===
-      // const formData = {
-      //   name: data.get("name"),
-      //   phone: data.get("phone"),
-      //   address: data.get("address"),
-      //   responsiblePerson: data.get("responsiblePerson"),
-      //   responsiblePersonNumber: data.get("responsiblePersonNumber"),
-      //   memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
-      //   memberSheet: imageUrl2,
-      // };
+      const formData = {
+        name: data.get("name"),
+        phone: data.get("phone"),
+        address: data.get("address"),
+        responsiblePerson: data.get("responsiblePerson"),
+        responsiblePersonNumber: data.get("responsiblePersonNumber"),
+        memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
+        memberSheet: imageUrl2,
+      };
+      console.log(formData)
+
+      mutationUP.mutate(formData);
 
       // ✅ You can now send this `formData` to your database or server
       // console.log("Final Form Data:", formData);
-      toast("Member added successfully!")
-     
+      // toast("Member added successfully!");
 
       form.reset(); // Optional: Reset the form after submission
       setImg(null); // Reset the image state
     } catch (error) {
       console.error("Upload error:", error);
-      toast("Image upload failed.")
+      toast("Image upload failed.");
     }
   };
+  const axiosPub = useAxiosPublic();
 
+  // tanstack query post
+  const mutationUP = useMutation({
+    mutationFn: async (formData) => {
+      const res = await axiosPub.post("/allmembar", formData);
+      return res.data;
+    },
+    onSuccess: () => {
+      toast.success("New Membar Added !.");
+    },
+  });
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2 sm:px-4 lg:px-8">
       <div className="max-w-2xl mx-auto">
@@ -149,6 +162,7 @@ export default function AddMember() {
               <textarea
                 name="address"
                 rows="3"
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm resize-none"
                 placeholder="Enter complete address"
               ></textarea>
@@ -163,6 +177,7 @@ export default function AddMember() {
                 </label>
                 <input
                   type="text"
+
                   name="responsiblePerson"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                   placeholder="Emergency contact name"
@@ -209,7 +224,8 @@ export default function AddMember() {
                   type="file"
                   onChange={(e) => setImg2(e.target.files[0])}
                   name="memberSheet"
-                  accept="image/*,.pdf,.doc,.docx"
+                  required
+                  accept="image/*"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />
               </div>
@@ -229,19 +245,17 @@ export default function AddMember() {
             </>
           ) : (
             <>
-            <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <button
-              type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
-            >
-              <FaSave className="w-5 h-5" />
-              <span>Save Member</span>
-            </button>
-          </div>
-            
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <button
+                  type="submit"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg flex items-center justify-center space-x-2"
+                >
+                  <FaSave className="w-5 h-5" />
+                  <span>Save Member</span>
+                </button>
+              </div>
             </>
           )}
-          
         </form>
 
         {/* Notes */}
