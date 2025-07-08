@@ -6,6 +6,7 @@ import HomeDash from "./Components/ADMIN PANEL/DASBOARD/HomeDash.jsx";
 import AddMember from "./Components/ADMIN PANEL/ADD_MEMBER/AddMember.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Member from "./Components/ADMIN PANEL/DASBOARD/Homedash_work/Member/Member.jsx";
+import Single_details from "./Components/ADMIN PANEL/ADD_MEMBER/Single_details/Single_details.jsx";
 const root = document.getElementById("root");
 const queryClient = new QueryClient();
 ReactDOM.createRoot(root).render(
@@ -19,6 +20,7 @@ ReactDOM.createRoot(root).render(
         <Route path="admin" element={<HomeDash></HomeDash>}>
           <Route path="mamber" element={<Member></Member>} />
           <Route path="add" element={<AddMember></AddMember>} />
+          <Route path="membar/:id" element={<Single_details></Single_details>} />
         </Route>
         {/* admin dashboard with outlet end*/}
       </Routes>
