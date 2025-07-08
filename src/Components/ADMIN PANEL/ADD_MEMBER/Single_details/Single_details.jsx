@@ -26,12 +26,14 @@ export default function Single_details() {
   const axiosSecure = useAxiosSecure();
   const params = useParams();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["single_details"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/allmembar/${params.id}`);
       return res.data;
     },
+
+    // refetchInterval: 5000, // 🔁 Refetch every 5 seconds (5000 ms)
   });
   console.log(data, "data");
 
@@ -75,7 +77,31 @@ export default function Single_details() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-         MutationUp.mutate({date : valDate})
+        MutationUp.mutate({ date: valDate });
+
+        Swal.fire({
+          title: "Payment Done!",
+          text: "Your Payment Done.",
+          icon: "success",
+        });
+      }
+    });
+  };
+  const pay1 = () => {
+    const valDate = moment(selectedDate).format("MMMM Do YYYY, h:mm:ss a");
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MutationUp.mutate({ date: valDate });
+
         Swal.fire({
           title: "Payment Done!",
           text: "Your Payment Done.",
@@ -91,7 +117,9 @@ export default function Single_details() {
       const res = await axiosSecure.patch(`/allmembar/${params?.id}`, v);
       return res.data;
     },
-    
+    onSuccess: () => {
+      refetch(); // ✅ only refetch after mutation is done
+    },
   });
 
   //
@@ -310,7 +338,12 @@ export default function Single_details() {
                       selected={selectedDate}
                       onChange={(date) => setSelectedDate(date)}
                     />
-                    <button className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Done</button>
+                    <button
+                      onClick={pay1}
+                      className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium"
+                    >
+                      Done
+                    </button>
                   </div>
                 </div>
               </div>
@@ -346,33 +379,18 @@ export default function Single_details() {
               <thead>
                 <tr>
                   {/* <th></th> */}
-                  <th>Month</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>PAYMENTS DATE / TIME</th>
                 </tr>
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr className="hover:bg-base-300">
-                  {/* <th>1</th> */}
-                  <th>January</th>
-                  <th>27.02.2025</th>
-                  <th>08.89</th>
-                </tr>
-                {/* row 2 */}
-                <tr className="hover:bg-base-300">
-                  {/* <th>2</th> */}
-                  <th>Decembar</th>
-                  <th>27.02.2025</th>
-                  <th>08.89</th>
-                </tr>
-                {/* row 3 */}
-                <tr className="hover:bg-base-300">
-                  {/* <th>3</th> */}
-                  <th>January</th>
-                  <th>27.02.2025</th>
-                  <th>08.89</th>
-                </tr>
+                {data?.payments?.map((d, i) => (
+                  <tr key={i} className="hover:bg-base-300">
+                    <td>{d}</td>
+                    {/* <td>{d.date}</td> */}
+                    {/* <td>{d.time}</td> */}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

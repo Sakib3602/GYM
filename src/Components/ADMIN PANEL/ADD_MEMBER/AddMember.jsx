@@ -68,7 +68,7 @@ export default function AddMember() {
         responsiblePerson: data.get("responsiblePerson"),
         responsiblePersonNumber: data.get("responsiblePersonNumber"),
         memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
-        memberSheet: imageUrl2,
+        memberSheet: imageUrl2 || "https://res.cloudinary.com/dpwuivub7/image/upload/v1751990015/wzoeti7r7k55eoplc9pj.avif",
         admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
         payments : [],
       };
