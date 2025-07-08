@@ -9,11 +9,20 @@ import {
   FaCalendarAlt,
   FaTrophy,
 } from "react-icons/fa";
+import "react-datepicker/dist/react-datepicker.css";
+
 import useAxiosSecure from "../../../AXIOS/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import moment from "moment/moment";
+import { toast, ToastContainer } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function Single_details() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  console.log(selectedDate, "date");
   const axiosSecure = useAxiosSecure();
   const params = useParams();
 
@@ -52,6 +61,41 @@ export default function Single_details() {
     },
   };
 
+  //
+  const pay = () => {
+    const valDate = moment().format("MMMM Do YYYY, h:mm:ss a");
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+         MutationUp.mutate({date : valDate})
+        Swal.fire({
+          title: "Payment Done!",
+          text: "Your Payment Done.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
+  //
+  const MutationUp = useMutation({
+    mutationFn: async (v) => {
+      const res = await axiosSecure.patch(`/allmembar/${params?.id}`, v);
+      return res.data;
+    },
+    
+  });
+
+  //
+
   return isLoading ? (
     <h1 className="text-7xl">Loading</h1>
   ) : (
@@ -62,6 +106,7 @@ export default function Single_details() {
           <div className="flex items-center justify-between h-16 sm:h-20">
             <div className="flex items-center space-x-3 sm:space-x-4">
               <div>
+                <ToastContainer></ToastContainer>
                 <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900">
                   Member Details
                 </h1>
@@ -71,7 +116,7 @@ export default function Single_details() {
               </div>
             </div>
             {/* <div className="flex items-center space-x-2 sm:space-x-3">
-              <button className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">
+              <button >
                 Edit
               </button>
             </div> */}
@@ -246,6 +291,28 @@ export default function Single_details() {
                     </p>
                   </div>
                 </div>
+                <div className="mt-6 flex flex-col sm:flex-row items-center gap-4">
+                  {/* Pay Button */}
+                  <button
+                    onClick={pay}
+                    className="group relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white bg-gradient-to-r from-green-500 to-emerald-600 rounded-full overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out"
+                  >
+                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-48 group-hover:h-48 opacity-10"></span>
+                    <span className="relative z-10 tracking-wide text-lg group-hover:tracking-widest transition-all duration-300 ease-in-out">
+                      💳 Pay This Month
+                    </span>
+                  </button>
+
+                  {/* Date Picker */}
+                  <div className="relative w-full sm:w-auto">
+                    <DatePicker
+                      className="rounded-[50px] bg-white shadow-[20px_20px_60px_#d9d9d9,-20px_-20px_60px_#ffffff] p-3"
+                      selected={selectedDate}
+                      onChange={(date) => setSelectedDate(date)}
+                    />
+                    <button className="px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">Done</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -270,6 +337,8 @@ export default function Single_details() {
             </div>
           </div>
         </div>
+
+        {/* table */}
         <div className="bg-white lg:p-10 mt-10">
           <div className="overflow-x-auto">
             <table className="table">
@@ -286,21 +355,21 @@ export default function Single_details() {
                 {/* row 1 */}
                 <tr className="hover:bg-base-300">
                   {/* <th>1</th> */}
-                   <th>January</th>
+                  <th>January</th>
                   <th>27.02.2025</th>
                   <th>08.89</th>
                 </tr>
                 {/* row 2 */}
                 <tr className="hover:bg-base-300">
                   {/* <th>2</th> */}
-                   <th>Decembar</th>
+                  <th>Decembar</th>
                   <th>27.02.2025</th>
                   <th>08.89</th>
                 </tr>
                 {/* row 3 */}
                 <tr className="hover:bg-base-300">
                   {/* <th>3</th> */}
-                   <th>January</th>
+                  <th>January</th>
                   <th>27.02.2025</th>
                   <th>08.89</th>
                 </tr>

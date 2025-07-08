@@ -69,7 +69,8 @@ export default function AddMember() {
         responsiblePersonNumber: data.get("responsiblePersonNumber"),
         memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
         memberSheet: imageUrl2,
-        admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a')
+        admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
+        payments : [],
       };
       console.log(formData)
 
