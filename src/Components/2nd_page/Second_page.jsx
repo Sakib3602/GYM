@@ -1,46 +1,43 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import mi from "../../assets/mi.jpg";
+import React from "react";
+import im from "../../assets/logo_ng.jpg";
 
 const Second_page = () => {
-  useEffect(() => {
-    AOS.init({ duration: 1000 });
-  }, []);
-
   return (
-    <div id="aboutS" className="px-4 py-10 bg-white text-gray-800">
-      <div className="max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg bg-white">
-        {/* Image with fixed aspect ratio and no top cut */}
-        <div className="w-full aspect-[3/2]">
+    <section id="aboutS" className="bg-white py-16 px-4 md:px-8 lg:px-24 poppins-regular">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        {/* Image */}
+        <div className="w-full">
           <img
-            src={mi}
-            alt="NG Fitness Gym"
-            className="w-full h-full object-cover object-center"
+            src={im}
+            alt="Our Team"
+            className="w-full h-full object-cover rounded-2xl shadow-md"
           />
         </div>
 
-        {/* Card Content */}
-        <div
-          data-aos="zoom-in-up"
-          className="px-6 py-8 sm:px-10 sm:py-12 bg-gray-50"
-        >
-          <h2 className="text-3xl font-bold mb-4 text-center sm:text-left">
+        {/* Text Content */}
+        <div className="text-center lg:text-left">
+          <h2 className="text-4xl lg:text-6xl font-bold text-gray-800 mb-6">
             About Us
           </h2>
-          <p className="text-base leading-relaxed poppins text-gray-700">
-            At NG Fitness Gym, we believe fitness is not just a goal — it's a
-            lifestyle. Our mission is to empower individuals of all levels to
-            achieve their health and wellness goals through expert guidance,
-            modern equipment, and a motivating environment. Whether you're a
-            beginner or a seasoned athlete, our certified trainers and
-            personalized programs are here to help you build strength, gain
-            confidence, and transform your body and mind. Join the NG Fitness
-            family and take the first step towards a stronger, healthier you.
+          <p className="text-lg text-gray-600 mb-4 leading-relaxed">
+            Welcome to our gym family! At{" "}
+            <span className="font-semibold text-black">NG Fitness Gym</span>, we believe
+            in transforming lives with passion, dedication, and strength. Our mission is
+            to empower individuals through personalized training, community support, and a
+            positive atmosphere.
           </p>
+          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
+            With professional trainers, state-of-the-art equipment, and a commitment to
+            your goals — we’re more than just a gym, we’re your transformation partner.
+          </p>
+          <div className="flex justify-center lg:justify-start">
+            <button className="px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+              Learn More
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

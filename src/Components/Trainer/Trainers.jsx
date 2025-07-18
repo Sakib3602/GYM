@@ -1,119 +1,101 @@
 import robin from "../../assets/robin.jpg";
 import nitto from "../../assets/nitto.jpeg";
+import rakib from "../../assets/m.avif"; // ✅ Your third trainer image
+
 import { FaFacebook } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
-import { Link } from "react-router";
 
 const Trainers = () => {
   return (
-    <div className="">
-      <div className="pb-5 mt-10 text-center text-4xl md:text-6xl poppins-bold text-shadow-lg text-[#7F22FE]">
-        OUR TEAM
-      </div>
+    <div className="min-h-screen w-full relative bg-white py-10 poppins-regular">
+      {/* Goldish Background Glow */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: `radial-gradient(circle at top center, rgba(255, 200, 0, 0.3), transparent 70%)`,
+          filter: "blur(100px)",
+          backgroundRepeat: "no-repeat",
+        }}
+      />
 
-      {/* Description Text Centered */}
-      <div className="w-full flex justify-center">
-        <div className="text-center max-w-xl text-base md:text-lg text-gray-800 px-4 md:px-0">
-          Our team is the best for you. Our team always look for your need. For
-          Any help feel free to contact !
-        </div>
-      </div>
+      {/* Section Header */}
+      {/* Section Header */}
+<div className="relative z-10 text-center px-4 mb-5">
+  <h1 className="text-4xl md:text-6xl font-extrabold text-yellow-700 tracking-widest mb-2">
+    OUR TEAM
+  </h1>
+  <hr className="w-32 mx-auto border-yellow-500 border-2 rounded-full mb-4" />
+  <p className="text-gray-700 max-w-2xl mx-auto text-sm md:text-base poppins-regular">
+    Meet the passionate individuals behind NG Fitness who are dedicated to helping you achieve your fitness goals. From strength coaching to personal transformation, our team is here to support your journey every step of the way.
+  </p>
+</div>
 
-      <hr className="my-6 border-[#7F22FE] w-[90%] mx-auto" />
 
-      {/* Trainers Section */}
-      <div className="py-5 flex flex-col lg:flex-row gap-8 items-center justify-center px-4">
-        <div
-          data-aos="fade-up"
-          className="flex flex-col max-w-sm w-full p-6 bg-[#F9FAFB] rounded-2xl shadow-md  hover:border-[0.5px] hover:border-violet-600"
-        >
-          <img
-            src={nitto}
-            alt="Nitto Biswas"
-            className="object-cover h-64 rounded-md sm:h-80 w-full"
-          />
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">Owner & Maneger</h2>
-            <span className="block pb-2 text-sm text-gray-600">
-              Nitto Biswas
-            </span>
-            <p className="text-sm text-gray-700">
-              Nitto Biswas is the owner of NG Fitness Gym. All the thing handle
-              by him. If you have any query feel free to contact any time.
-            </p>
-            <div className="pt-4 flex justify-start gap-4">
-              <Link to={"https://www.facebook.com/ng.fit.2024"}>
-                <FaFacebook className="text-blue-700 h-6 w-6" />
-              </Link>
-              <Link to={"https://www.instagram.com/ng_fitness_gym/"}>
-                <BsInstagram className="text-pink-500 h-6 w-6" />
-              </Link>
-
-              {/* <h1 className="poppins-bold-italic text-[#7F22FE]">Phone : +880 19 9372 6235</h1> */}
-            </div>
-          </div>
-        </div>
-        {/* Robin Hasan */}
-        <div
-          data-aos="fade-up"
-          className="flex flex-col max-w-sm w-full p-6 bg-[#F9FAFB] rounded-2xl shadow-md  hover:border-[0.5px] hover:border-violet-600"
-        >
+      {/* Trainer Cards */}
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-10 px-5 md:px-20">
+        {/* CARD 1 - Robin */}
+        <div className="bg-white/30 backdrop-blur-md border border-yellow-300 rounded-2xl shadow-lg p-6 hover:shadow-yellow-500/50 transition duration-300">
           <img
             src={robin}
-            alt="Robin Hasan"
-            className="object-cover h-64 rounded-md sm:h-80 w-full"
+            alt="Robin"
+            className="w-40 h-40 object-cover rounded-full mx-auto border-4 border-yellow-500 hover:scale-105 transition duration-300"
           />
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">Senior Trainer</h2>
-            <span className="block pb-2 text-sm text-gray-600">
-              Robin Hasan
-            </span>
-            <p className="text-sm text-gray-700">
-              Robin Hasan, our senior trainer, brings over 10 years of
-              experience in strength and weight training with expert-level
-              motivation and care.
-            </p>
-            <div className="pt-4 flex justify-start gap-4">
-              <Link to={"https://www.facebook.com/mohidul.hasan.robin"}>
-                {" "}
-                <FaFacebook className="text-blue-700 h-6 w-6" />
-              </Link>
-
-              {/* <BsInstagram className="text-pink-500 h-6 w-6" /> */}
-            </div>
+          <h3 className="text-center text-xl font-bold mt-4 text-yellow-800">Robin</h3>
+          <p className="text-center text-sm text-gray-700">Senior Trainer</p>
+          <p className="text-center text-sm mt-2 text-gray-600 poppins-regular">
+            A passionate strength coach who believes in building discipline through consistency.
+          </p>
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+              <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
+            </a>
           </div>
         </div>
 
-        {/* Nitto Biswas */}
-
-        {/* Random */}
-        <div
-          data-aos="fade-up"
-          className="flex flex-col max-w-sm w-full p-6 bg-[#F9FAFB] rounded-2xl shadow-md  hover:border-[0.5px] hover:border-violet-600"
-        >
+        {/* CARD 2 - Nitto */}
+        <div className="bg-white/30 backdrop-blur-md border border-yellow-300 rounded-2xl shadow-lg p-6 hover:shadow-yellow-500/50 transition duration-300">
           <img
-            src={
-              "https://media.istockphoto.com/id/526947869/vector/man-silhouette-profile-picture.jpg?s=612x612&w=0&k=20&c=5I7Vgx_U6UPJe9U2sA2_8JFF4grkP7bNmDnsLXTYlSc="
-            }
-            alt="Nitto Biswas"
-            className="object-cover h-64 rounded-md sm:h-80 w-full"
+            src={nitto}
+            alt="Nitto"
+            className="w-40 h-40 object-cover rounded-full mx-auto border-4 border-yellow-500 hover:scale-105 transition duration-300"
           />
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold">Training Assistant</h2>
-            <span className="block pb-2 text-sm text-gray-600">
-              Saidur Alom
-            </span>
-            <p className="text-sm text-gray-700">
-              Saidur Alom specializes in cardio and endurance coaching, helping
-              clients build stamina and lead healthier lifestyles.
-            </p>
-            <div className="pt-4 flex justify-start gap-4">
-              <Link to={"https://www.facebook.com/ng.fit.2024"}>
-                <FaFacebook className="text-blue-700 h-6 w-6" />
-              </Link>
+          <h3 className="text-center text-xl font-bold mt-4 text-yellow-800">Nitto Biswas</h3>
+          <p className="text-center text-sm text-gray-700">Owner & Manager</p>
+          <p className="text-center text-sm mt-2 text-gray-600 poppins-regular">
+            Leading NG Fitness with vision and energy. Loves mentoring and transforming lives.
+          </p>
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+              <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
+            </a>
+          </div>
+        </div>
 
-              {/* <BsInstagram className="text-pink-500 h-6 w-6" /> */}
-            </div>
+        {/* CARD 3 - Rakib (added back) */}
+        <div className="bg-white/30 backdrop-blur-md border border-yellow-300 rounded-2xl shadow-lg p-6 hover:shadow-yellow-500/50 transition duration-300">
+          <img
+            src={rakib}
+            alt="Rakib"
+            className="w-40 h-40 object-cover rounded-full mx-auto border-4 border-yellow-500 hover:scale-105 transition duration-300"
+          />
+          <h3 className="text-center text-xl font-bold mt-4 text-yellow-800">Rakib</h3>
+          <p className="text-center text-sm text-gray-700">Fitness Coach</p>
+          <p className="text-center text-sm mt-2 text-gray-600 poppins-regular">
+            Expert in weight loss and personal transformation with customized training programs.
+          </p>
+          <div className="flex justify-center gap-4 mt-4">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+              <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+              <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
+            </a>
           </div>
         </div>
       </div>

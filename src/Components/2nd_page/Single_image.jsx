@@ -1,12 +1,12 @@
 import React from "react";
 import { Parallax } from "react-parallax";
-import ng from "../../assets/logo_ng.jpg";
+import ng from "../../assets/Yellow_And_Black_Fitness_YouTube_Thumbnail_(1)[1].png";
 
 const Single_image = () => {
   return (
     <Parallax bgImage={ng} strength={300}>
-      <div className="h-[50vh] md:h-[50vh] lg:h-[80vh] flex items-center justify-center">
-        <div className="hero-overlay"></div>
+      <div className="h-[30vh] md:h-[50vh] lg:h-[80vh] flex items-center justify-center">
+        <div className=""></div>
         {/* <h1 className="text-white text-4xl md:text-6xl font-bold text-center px-4">
           🕒 Open 24/7 | 5:00 AM – 12:00 AM
         </h1> */}

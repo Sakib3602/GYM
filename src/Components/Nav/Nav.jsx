@@ -1,39 +1,70 @@
 import React from "react";
-import { Menu } from "lucide-react"; // optional: if you're using lucide icons
-import Headroom from 'react-headroom';
+import Headroom from "react-headroom";
+
 const Nav = () => {
   return (
-   <Headroom >
-     <div className="navbar shadow-2xl h-24 text-black lg:px-16 font-extrabold z-50 backdrop-blur-sm">
-      {/* Left side (Logo and dropdown for mobile) */}
-      <div className="navbar">
-        {/* Mobile Dropdown */}
-        <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-            {/* You can use an SVG or a library icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-black"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <Headroom
+      style={{
+        zIndex: 999,
+        position: 'fixed',
+        width: '100%',
+      }}
+    >
+      <div className="navbar poppins-regular h-24 lg:px-16 font-extrabold backdrop-blur-sm bg-white/40 dark:bg-white/80 text-black dark:text-black shadow-2xl">
+        {/* Left: Logo + Dropdown */}
+        <div className="navbar">
+          {/* Mobile Dropdown */}
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm absolute font-medium dropdown-content mt-3 z-[1000] p-2 shadow bg-white dark:bg-gray-800 text-black dark:text-white rounded-box w-52"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
+              <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                <a href="#">Home</a>
+              </li>
+              <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                <a href="#aboutS">About Us</a>
+              </li>
+              <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                <a href="#ss">Services</a>
+              </li>
+              <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                <a href="#price">MemberShip Plan</a>
+              </li>
+              <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                <a href="#contact">Contact</a>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm font-medium dropdown-content mt-3 z-[1] p-2 shadow bg-white rounded-box w-52"
-          >
+
+          {/* Logo */}
+          <a href="#" data-aos="fade-down" className="text-lg poppins-bold">
+            <span className="text-4xl text-[#7F22FE]">NG </span> FITNESS GYM
+          </a>
+        </div>
+
+        {/* Desktop Menu */}
+        <div data-aos="fade-down" className="navbar-center hidden lg:flex z-[1000]">
+          <ul className="menu menu-horizontal px-1 font-medium">
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
               <a href="#">Home</a>
             </li>
-          
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
               <a href="#aboutS">About Us</a>
             </li>
@@ -41,66 +72,15 @@ const Nav = () => {
               <a href="#ss">Services</a>
             </li>
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
-              <a href="#gallary">Gallery</a>
+              <a href="#price">MemberShip Plan</a>
             </li>
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
-               <a href="#price">MemberShip Plan</a>
-            </li>
-            <li className="hover:text-[#7F22FE] transition-colors duration-200">
-               <a href="#contact">Contact</a>
+              <a href="#contact">Contact</a>
             </li>
           </ul>
         </div>
-
-        {/* Logo */}
-        <a href="#" data-aos="fade-down" className=" text-lg   poppins-bold">
-          <span className="text-4xl text-[#7F22FE] ">NG </span> FITNESS GYM
-        </a>
       </div>
-
-      {/* Center (Desktop Menu) */}
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 font-medium ">
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-            <a href="#">Home</a>
-          </li>
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-            <a href="#aboutS">About Us</a>
-          </li>
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-           <a href="#ss">Services</a>
-          </li>
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-            <a href="#gallary">Gallery</a>
-          </li>
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-            <a href="#price">MemberShip Plan</a>
-          </li>
-          <li
-            data-aos="fade-down"
-            className="hover:text-[#7F22FE] transition-colors duration-200"
-          >
-            <a href="#contact">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-   </Headroom>
+    </Headroom>
   );
 };
 

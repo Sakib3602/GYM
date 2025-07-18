@@ -1,237 +1,97 @@
-import React from "react";
+import {
+  Dumbbell,
+  HeartPulse,
+  Users,
+  UtensilsCrossed,
+  Sun,
+  Zap,
+} from "lucide-react";
 
-const Services = () => {
+export default function Services() {
+  const services = [
+    {
+      icon: Dumbbell,
+      title: "Personal Training",
+      description:
+        "Achieve your goals faster with customized workout plans and one-on-one coaching.",
+      gradient: "from-yellow-400 to-yellow-600", // gold-ish gradient
+    },
+    {
+      icon: Users,
+      title: "Group Classes",
+      description:
+        "Join energetic group sessions like Yoga, HIIT, Zumba, and Spin for a fun workout.",
+      gradient: "from-yellow-400 to-yellow-600",
+    },
+    {
+      icon: HeartPulse,
+      title: "Cardio & Strength",
+      description:
+        "Access state-of-the-art cardio machines and a wide range of strength training equipment.",
+      gradient: "from-yellow-400 to-yellow-600",
+    },
+    {
+      icon: UtensilsCrossed,
+      title: "Nutrition Guidance",
+      description:
+        "Get expert advice and meal plans to fuel your body and optimize your fitness results.",
+      gradient: "from-yellow-400 to-yellow-600",
+    },
+    {
+      icon: Sun,
+      title: "Wellness Programs",
+      description:
+        "Explore holistic wellness with mindfulness, flexibility, and recovery sessions.",
+      gradient: "from-yellow-400 to-yellow-600",
+    },
+    {
+      icon: Zap,
+      title: "24/7 Access",
+      description:
+        "Train anytime, day or night, with secure access to our facilities.",
+      gradient: "from-yellow-400 to-yellow-600",
+    },
+  ];
+
   return (
-    <div id="ss" className="h-full py-10 lg:px-20 bg-[#F3F4F6]">
-      <div className="pb-5 text-center text-5xl md:text-7xl poppins-bold text-shadow-lg text-[#7F22FE]">
-        OUR SERVICES
-      </div>
-      <div className="w-full flex justify-center">
-        <div className="text-center max-w-xl text-base md:text-lg text-gray-800 px-4 md:px-0">
-          At NG Fitness, we offer expert training, personalized plans, group
-          workouts, modern equipment, and nutrition support — everything you
-          need to stay fit, healthy, and motivated every day.
+    <section
+      id="ss"
+      className="relative w-full py-16 md:py-24 lg:py-32 min-h-[80vh] flex items-center justify-center bg-white poppins-regular"
+    >
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-tight mb-4">
+            <span className="bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+              OUR
+            </span>{" "}
+            SERVICES
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+            At NG Fitness, we offer expert training, personalized plans, group
+            workouts, modern equipment, and nutrition support — everything you
+            need to stay fit, healthy, and motivated every day.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="group relative bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer transition-transform duration-500 hover:shadow-xl hover:-translate-y-4"
+            >
+              <div
+                className={`w-20 h-20 mx-auto mb-8 rounded-full bg-gradient-to-br ${service.gradient} text-white flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:-translate-y-6`}
+              >
+                <service.icon className="w-10 h-10" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                {service.title}
+              </h3>
+              <p className="text-gray-700 leading-relaxed">{service.description}</p>
+            </div>
+          ))}
         </div>
       </div>
-      <hr className="my-6 border-[#7F22FE] w-[90%] mx-auto" />
-      {/* <hr className="pb-6 pt-6 " /> */}
-      <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical ">
-        <li className="poppins-medium " data-aos="fade-left">
-          <div className="timeline-middle">
-            {/* Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-start mb-10 md:text-end">
-            <time className="font-mono italic">Service 1</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Personal Training
-            </div>
-            Get one-on-one coaching from certified trainers tailored to your
-            fitness goals and body type.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-right">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-end md:mb-10">
-            <time className="font-mono italic">Service 2</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Group Cardio
-            </div>
-            On every Wednesday we organize a group cardio class from 6:00 PM.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-left">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-start mb-10 md:text-end">
-            <time className="font-mono italic">Service 3</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Modern Gym Equipment
-            </div>
-            Access a wide range of professional-grade cardio, strength, and
-            functional fitness machines.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-right">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-end md:mb-10">
-            <time className="font-mono italic">Service 4</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Nutrition & Diet Plans
-            </div>
-            Get personalized meal plans and guidance from our certified
-            nutrition experts.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-left">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-start mb-10 md:text-end">
-            <time className="font-mono italic">Service 5</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Weight Loss Programs
-            </div>
-            Join our focused programs designed to burn fat, build lean muscle,
-            and boost your metabolism.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-right">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-end md:mb-10">
-            <time className="font-mono italic">Service 6</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Bodybuilding & Strength Coaching
-            </div>
-            Train like a pro with advanced strength-building routines and
-            hypertrophy workouts.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-left">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-start mb-10 md:text-end">
-            <time className="font-mono italic">Service 7</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              Locker Rooms & Showers
-            </div>
-            Clean and secure locker facilities with modern restrooms and showers
-            for your convenience.
-          </div>
-          <hr />
-        </li>
-
-        <li className="poppins-medium" data-aos="fade-right">
-          <hr />
-          <div className="timeline-middle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className="h-5 w-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div className="timeline-end md:mb-10">
-            <time className="font-mono italic">Service 8</time>
-            <div className="text-lg font-black text-[#7F22FE]">
-              24/7 Access & Support
-            </div>
-            Open from 5:00 AM to 12:00 AM every day — stay consistent with your
-            fitness routine.
-          </div>
-        </li>
-      </ul>
-    </div>
+    </section>
   );
-};
-
-export default Services;
+}

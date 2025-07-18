@@ -58,8 +58,8 @@ export default function AddMember() {
       );
       const imageUrl2 = response2.data.secure_url; // ✅ Get uploaded image URL
       setLoad(false);
-      console.log(imageUrl, "1111");
-      console.log(imageUrl2, "2222");
+      // console.log(imageUrl, "1111");
+      // console.log(imageUrl2, "2222");
       // === Prepare the final form data ===
       const formData = {
         name: data.get("name"),

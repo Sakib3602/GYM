@@ -13,7 +13,7 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {/* Phone */}
-          <div className="bg-white border-2 border-gray-200 rounded-lg hover:border-red-300 hover:shadow-lg transition-all duration-300 group">
+          <div className="  bg-white border-2 border-gray-200 rounded-lg hover:border-red-300 hover:shadow-lg transition-all duration-300 group">
             <div className="p-6 text-center">
               <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                 <FaPhone className="w-8 h-8 text-white" />
