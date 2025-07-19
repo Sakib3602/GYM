@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 
 export default function ReviewC() {
   useEffect(() => {
-    AOS.init({ duration: 1000, easing: "ease-in-out" });
+    AOS.init({ duration: 800, easing: "ease-in-out" });
   }, []);
 
   const reviews = [

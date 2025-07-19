@@ -7,6 +7,7 @@ import AddMember from "./Components/ADMIN PANEL/ADD_MEMBER/AddMember.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Member from "./Components/ADMIN PANEL/DASBOARD/Homedash_work/Member/Member.jsx";
 import Single_details from "./Components/ADMIN PANEL/ADD_MEMBER/Single_details/Single_details.jsx";
+import Four from "./Components/Four0Four/Four.jsx";
 const root = document.getElementById("root");
 const queryClient = new QueryClient();
 ReactDOM.createRoot(root).render(
@@ -23,6 +24,9 @@ ReactDOM.createRoot(root).render(
           <Route path="membar/:id" element={<Single_details></Single_details>} />
         </Route>
         {/* admin dashboard with outlet end*/}
+        {/* wrong route */}
+        <Route path="*" element={<Four></Four>} />
+        {/* wrong route */}
       </Routes>
     </QueryClientProvider>
   </BrowserRouter>

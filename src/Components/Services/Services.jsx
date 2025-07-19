@@ -1,3 +1,4 @@
+import Aos from "aos";
 import {
   Dumbbell,
   HeartPulse,
@@ -6,6 +7,7 @@ import {
   Sun,
   Zap,
 } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Services() {
   const services = [
@@ -52,6 +54,9 @@ export default function Services() {
       gradient: "from-yellow-400 to-yellow-600",
     },
   ];
+  useEffect(() => {
+        Aos.init({ duration: 800, easing: "ease-in-out" });
+      }, []);
 
   return (
     <section
@@ -77,6 +82,7 @@ export default function Services() {
           {services.map((service, index) => (
             <div
               key={index}
+              data-aos="fade-up"
               className="group relative bg-white rounded-2xl shadow-md p-8 text-center cursor-pointer transition-transform duration-500 hover:shadow-xl hover:-translate-y-4"
             >
               <div
