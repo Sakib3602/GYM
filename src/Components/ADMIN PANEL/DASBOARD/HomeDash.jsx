@@ -35,7 +35,7 @@ export default function HomeDash() {
   const links = [
     { to: "/admin", icon: <FaHome />, text: "Dashboard" },
     { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
-    { to: "/admin/classes", icon: <FaDumbbell />, text: "Classes" },
+    { to: "/admin/d", icon: <FaDumbbell />, text: "Deactive Members" },
     { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
     { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
     { to: "/admin/reports", icon: <FaClipboardList />, text: "Reports" },
@@ -71,9 +71,9 @@ export default function HomeDash() {
 
         {/* Logo section */}
         <div className="px-5 py-4 border-b hidden lg:flex items-center justify-center">
-          <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
-            NG
-          </div>
+         <Link to={"/"}> <div className="p-8  h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
+            NG FITNESS GYM
+          </div></Link>
         </div>
 
         {/* Sidebar links */}

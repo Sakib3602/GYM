@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import Headroom from "react-headroom";
+import { AuthContext } from "../logreg/AuthProvider";
+import { Link } from "react-router";
 
 const Nav = () => {
+  const { person } = useContext(AuthContext);
   return (
     <Headroom
       style={{
         zIndex: 999,
-        position: 'fixed',
-        width: '100%',
+        position: "fixed",
+        width: "100%",
       }}
     >
-      <div id="nav" className="navbar poppins-regular h-24 lg:px-16 font-extrabold backdrop-blur-sm bg-white/40 dark:bg-white/80 text-black dark:text-black shadow-2xl">
+      <div
+        id="nav"
+        className="navbar poppins-regular h-24 lg:px-16 font-extrabold backdrop-blur-sm bg-white/40 dark:bg-white/80 text-black dark:text-black shadow-2xl"
+      >
         {/* Left: Logo + Dropdown */}
         <div className="navbar">
           {/* Mobile Dropdown */}
@@ -50,6 +56,24 @@ const Nav = () => {
               <li className="hover:text-[#7F22FE] transition-colors duration-200">
                 <a href="#contact">Contact</a>
               </li>
+              {person ? (
+                <Link to={"/admin"}>
+                  <li>
+                    <h1 className="hover:text-[#7F22FE] transition-colors duration-200">
+                      Admin Panel
+                    </h1>
+                  </li>
+                </Link>
+              ) : (
+                <Link
+                  to="/signup"
+                 
+                >
+                  <li>
+                    <h1  className="hover:text-[#7F22FE] transition-colors duration-200">Admin Login</h1>
+                  </li>
+                </Link>
+              )}
             </ul>
           </div>
 
@@ -60,7 +84,10 @@ const Nav = () => {
         </div>
 
         {/* Desktop Menu */}
-        <div data-aos="fade-down" className="navbar-center hidden lg:flex z-[1000]">
+        <div
+          data-aos="fade-down"
+          className="navbar-center hidden lg:flex z-[1000]"
+        >
           <ul className="menu menu-horizontal px-1 font-medium">
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
               <a href="#">Home</a>
@@ -77,6 +104,23 @@ const Nav = () => {
             <li className="hover:text-[#7F22FE] transition-colors duration-200">
               <a href="#contact">Contact</a>
             </li>
+            {person ? (
+              <Link to={"/admin"}>
+                <li className="hover:text-[#7F22FE] transition-colors duration-200">
+                  <h1> Admin Panel</h1>
+                </li>
+              </Link>
+            ) : (
+              <Link
+                to="/signup"
+                
+              >
+                <li>
+                  <h1 className="hover:text-[#7F22FE] transition-colors duration-200">Admin Login</h1>
+                  
+                 </li>
+              </Link>
+            )}
           </ul>
         </div>
       </div>

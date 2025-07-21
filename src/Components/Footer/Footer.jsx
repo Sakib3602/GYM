@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
 // import { Link } from "react-router-dom";\
 import im from '../../assets/logo_ng.jpg'
+import { AuthContext } from "../logreg/AuthProvider";
 
 const Footer = () => {
+  const {person} = useContext(AuthContext);
   return (
     <footer className="bg-white text-gray-800 py-12 px-5 shadow-inner ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -20,7 +22,10 @@ const Footer = () => {
     <li><a href="#ss" className="text-gray-600 hover:text-yellow-600 transition">Services</a></li>
     <li><a href="#gallary" className="text-gray-600 hover:text-yellow-600 transition">Gallery</a></li>
     <li><a href="#price" className="text-gray-600 hover:text-yellow-600 transition">Membership Plan</a></li>
-    <li><Link to="/signup" className="text-gray-600 hover:text-yellow-600 transition">Admin Login</Link></li>
+    {
+      person ? <Link to={"/admin"}><h1>Admin Panel</h1> </Link> : <li><Link to="/signup" className="text-gray-600 hover:text-yellow-600 transition">Admin Login</Link></li>
+    }
+    
   </ul>
 </div>
 

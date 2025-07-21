@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Fuse from "fuse.js";
-import { useQuery } from "@tanstack/react-query";
+// import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../AXIOS/useAxiosPublic";
 import { Link } from "react-router";
 import { Phone } from "lucide-react";
 import Loader from "../../Loader/Loader";
+import { useQuery } from "@tanstack/react-query";
+// import useAxiosSecure from "../../AXIOS/useAxiosSecure";
+// import { toast, ToastContainer } from "react-toastify";
 
-const AllMembers = () => {
+const Deactive = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredMembers, setFilteredMembers] = useState(null); // null means show all members
   const axiosPub = useAxiosPublic();
 
   // Fetch all members from the server
-  const { data: members = [], isLoading } = useQuery({
+  const {
+    data: members = [],
+    isLoading,
+    
+  } = useQuery({
     queryKey: ["members"],
     queryFn: async () => {
       const res = await axiosPub.get("/allmembar");
@@ -21,8 +28,16 @@ const AllMembers = () => {
     },
   });
   console.log(members);
-    const dataFill = members.filter((m)=> m.active === "yes")
 
+  // const mutationUP = useMutation({
+  //     mutationFn: async (formData) => {
+  //       const res = await axiosPub.post("/allmembar", formData);
+  //       return res.data;
+  //     },
+  //     onSuccess: () => {
+  //       toast.success("New Membar Added !.");
+  //     },
+  //   });
   
 
   useEffect(() => {
@@ -32,7 +47,7 @@ const AllMembers = () => {
   }, [searchTerm]);
   // Fuse.js search handler
   const handleSearch = () => {
-    const fuse = new Fuse(dataFill, {
+    const fuse = new Fuse(members, {
       keys: ["name", "phone"], // searchable fields
       threshold: 0.3,
     });
@@ -42,17 +57,12 @@ const AllMembers = () => {
     setFilteredMembers(matched);
   };
 
-  if (isLoading) return <Loader></Loader>
+  if (isLoading) return <Loader></Loader>;
 
-  const dataToShow = filteredMembers || dataFill;
-
-
-  // console.log("datafil,data",dataFill)
-
-  
+  const dataToShow = filteredMembers || members;
 
   return (
-    <div className="p-5">
+    <div className="p-5 bg-black">
       {/* Search Input */}
       <div className="flex justify-center mb-6">
         <input
@@ -69,16 +79,14 @@ const AllMembers = () => {
           Search
         </button>
       </div>
-
+      
       {/* Member Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {dataToShow.map((member) => (
           <Link to={`/admin/membar/${member._id}`}>
-            <div className={`group relative w-full max-w-xs mx-auto rounded-2xl shadow-xl overflow-hidden border transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl ${
-    member?.isActive
-      ? "bg-black text-white border-gray-800 hover:border-blue-400"
-      : "bg-white text-gray-900 border-gray-100 hover:border-blue-200"
-  }`}>
+            <div
+              className={`group relative w-full max-w-xs mx-auto rounded-2xl shadow-xl overflow-hidden border transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl bg-black text-white border-gray-800 hover:border-white-400`}
+            >
               {/* Image Container with Hover Effect */}
               <div className="relative w-full aspect-square overflow-hidden rounded-t-2xl">
                 <img
@@ -97,15 +105,18 @@ const AllMembers = () => {
               {/* Card Content */}
               <div className="p-6 text-center">
                 {/* Name */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-2xl font-bold text-white-900 mb-2 group-hover:text-white-600 transition-colors duration-300">
                   {member?.name}
                 </h3>
 
                 {/* Number */}
-                <div className="flex items-center justify-center text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                  <Phone className="w-5 h-5 mr-2 text-blue-500" />
+                <div className="flex items-center justify-center text-white-700 group-hover:text-white-900 transition-colors duration-300">
+                  <Phone className="w-5 h-5 mr-2 text-white-500" />
                   <span className="text-lg font-medium">{member?.phone}</span>
                 </div>
+                {/* button */}
+
+               
               </div>
 
               {/* Animated Border Bottom on Card Hover */}
@@ -118,4 +129,4 @@ const AllMembers = () => {
   );
 };
 
-export default AllMembers;
+export default Deactive;

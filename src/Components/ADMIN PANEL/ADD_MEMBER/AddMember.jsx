@@ -71,6 +71,7 @@ export default function AddMember() {
         memberSheet: imageUrl2 || "https://res.cloudinary.com/dpwuivub7/image/upload/v1751990015/wzoeti7r7k55eoplc9pj.avif",
         admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
         payments : [],
+        active : "yes",
       };
       console.log(formData)
 
@@ -241,7 +242,7 @@ export default function AddMember() {
                   type="file"
                   onChange={(e) => setImg2(e.target.files[0])}
                   name="memberSheet"
-                  required
+                  
                   accept="image/*"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />
