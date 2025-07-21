@@ -10,7 +10,7 @@ const Nav = () => {
         width: '100%',
       }}
     >
-      <div className="navbar poppins-regular h-24 lg:px-16 font-extrabold backdrop-blur-sm bg-white/40 dark:bg-white/80 text-black dark:text-black shadow-2xl">
+      <div id="nav" className="navbar poppins-regular h-24 lg:px-16 font-extrabold backdrop-blur-sm bg-white/40 dark:bg-white/80 text-black dark:text-black shadow-2xl">
         {/* Left: Logo + Dropdown */}
         <div className="navbar">
           {/* Mobile Dropdown */}

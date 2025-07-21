@@ -8,17 +8,22 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Member from "./Components/ADMIN PANEL/DASBOARD/Homedash_work/Member/Member.jsx";
 import Single_details from "./Components/ADMIN PANEL/ADD_MEMBER/Single_details/Single_details.jsx";
 import Four from "./Components/Four0Four/Four.jsx";
+import SignUpCom from "./Components/logreg/SignUpCom.jsx";
+import AuthProvider from "./Components/logreg/AuthProvider.jsx";
+import PrivateRoute from "./Components/logreg/PrivateRoute.jsx";
 const root = document.getElementById("root");
 const queryClient = new QueryClient();
 ReactDOM.createRoot(root).render(
   <BrowserRouter>
+  <AuthProvider>
     <QueryClientProvider client={queryClient}>
       <Routes>
         {/* public page */}
         <Route index element={<MainHome />} />
+        <Route path="signup" element={<SignUpCom></SignUpCom>} />
 
         {/* admin dashboard with outlet start*/}
-        <Route path="admin" element={<HomeDash></HomeDash>}>
+        <Route path="admin" element={<PrivateRoute><HomeDash></HomeDash></PrivateRoute>}>
           <Route path="mamber" element={<Member></Member>} />
           <Route path="add" element={<AddMember></AddMember>} />
           <Route path="membar/:id" element={<Single_details></Single_details>} />
@@ -29,5 +34,6 @@ ReactDOM.createRoot(root).render(
         {/* wrong route */}
       </Routes>
     </QueryClientProvider>
+    </AuthProvider>
   </BrowserRouter>
 );

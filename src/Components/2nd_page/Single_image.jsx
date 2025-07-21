@@ -1,6 +1,6 @@
 import React from "react";
 import { Parallax } from "react-parallax";
-import ng from "../../assets/Yellow_And_Black_Fitness_YouTube_Thumbnail_(1)[1].png";
+import ng from "../../assets/single.png";
 
 const Single_image = () => {
   return (

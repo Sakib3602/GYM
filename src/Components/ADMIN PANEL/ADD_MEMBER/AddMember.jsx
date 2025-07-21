@@ -126,6 +126,20 @@ export default function AddMember() {
           className="bg-white rounded-lg shadow-sm p-6"
         >
           <div className="space-y-6">
+            {/* serial */}
+            {/* <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <FaUser className="inline mr-2" />
+                Serial Number *
+              </label>
+              <input
+                type="text"
+                name="name"
+                required
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                placeholder="Give serial number"
+              />
+            </div> */}
             {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
