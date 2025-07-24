@@ -21,9 +21,7 @@ const AllMembers = () => {
     },
   });
   console.log(members);
-    const dataFill = members.filter((m)=> m.active === "yes")
-
-  
+  const dataFill = members.filter((m) => m.active === "yes");
 
   useEffect(() => {
     if (!searchTerm.trim()) {
@@ -42,14 +40,11 @@ const AllMembers = () => {
     setFilteredMembers(matched);
   };
 
-  if (isLoading) return <Loader></Loader>
+  if (isLoading) return <Loader></Loader>;
 
   const dataToShow = filteredMembers || dataFill;
 
-
   // console.log("datafil,data",dataFill)
-
-  
 
   return (
     <div className="p-5">
@@ -74,11 +69,13 @@ const AllMembers = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {dataToShow.map((member) => (
           <Link to={`/admin/membar/${member._id}`}>
-            <div className={`group relative w-full max-w-xs mx-auto rounded-2xl shadow-xl overflow-hidden border transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl ${
-    member?.isActive
-      ? "bg-black text-white border-gray-800 hover:border-blue-400"
-      : "bg-white text-gray-900 border-gray-100 hover:border-blue-200"
-  }`}>
+            <div
+              className={`group relative w-full max-w-xs mx-auto rounded-2xl shadow-xl overflow-hidden border transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl ${
+                member?.isActive
+                  ? "bg-black text-white border-gray-800 hover:border-blue-400"
+                  : "bg-white text-gray-900 border-gray-100 hover:border-blue-200"
+              }`}
+            >
               {/* Image Container with Hover Effect */}
               <div className="relative w-full aspect-square overflow-hidden rounded-t-2xl">
                 <img

@@ -19,13 +19,16 @@ const Due = () => {
 
   // Calculate due months for each user
   const getDueMonths = (user) => {
-    if (!user.admiteDate) {
-      console.warn("Missing admitDate for user:", user.name);
-      return [];
-    }
+    // if (!user.admiteDate) {
+    //   console.warn("Missing admitDate for user:", user.name);
+    //   return [];
+    // }
 
     // Parse admitDate with proper format including ordinal
-    const admitDate = moment(user.admiteDate, "MMMM Do YYYY, h:mm:ss a").startOf("month");
+    const admitDate = moment(
+      user.admiteDate,
+      "MMMM Do YYYY, h:mm:ss a"
+    ).startOf("month");
 
     // Parse payments accordingly
     const paidMonths = user.payments.map((date) =>
@@ -48,6 +51,9 @@ const Due = () => {
     return dueMonths;
   };
 
+  const DueUsers = users.filter((user) => getDueMonths(user).length > 0);
+  console.log(DueUsers);
+
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="text-center mb-10">
@@ -57,7 +63,7 @@ const Due = () => {
       </div>
 
       <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {users.map((user) => {
+        {DueUsers?.map((user) => {
           const dueMonths = getDueMonths(user);
 
           return (
@@ -72,12 +78,15 @@ const Due = () => {
                 className="w-28 h-28 rounded-full object-cover border-4 border-indigo-500 mb-4 shadow-md"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = "https://via.placeholder.com/112?text=No+Image";
+                  e.target.src =
+                    "https://via.placeholder.com/112?text=No+Image";
                 }}
               />
 
               {/* User Info */}
-              <h2 className="text-2xl font-semibold text-gray-900">{user.name}</h2>
+              <h2 className="text-2xl font-semibold text-gray-900">
+                {user.name}
+              </h2>
               <p className="text-gray-600 mt-1">📞 {user.phone}</p>
               <p className="text-gray-600">{user.address}</p>
 
@@ -88,7 +97,9 @@ const Due = () => {
                     <p className="text-red-600 font-bold mb-3 text-lg">
                       ❌ Missed Payments
                     </p>
-                    <p className="mb-2 font-medium text-gray-700">📆 Due Months:</p>
+                    <p className="mb-2 font-medium text-gray-700">
+                      📆 Due Months:
+                    </p>
                     <div className="flex flex-wrap justify-center gap-2">
                       {dueMonths.map((month) => (
                         <span
@@ -100,12 +111,16 @@ const Due = () => {
                       ))}
                     </div>
                     <p className="mt-3 font-semibold text-gray-800">
-                      🧮 Total Due: <span className="text-red-600">{dueMonths.length}</span> month
+                      🧮 Total Due:{" "}
+                      <span className="text-red-600">{dueMonths.length}</span>{" "}
+                      month
                       {dueMonths.length > 1 ? "s" : ""}
                     </p>
                   </>
                 ) : (
-                  <p className="text-green-600 font-semibold text-lg">✅ No Dues</p>
+                  <p className="text-green-600 font-semibold text-lg">
+                    ✅ No Dues
+                  </p>
                 )}
               </div>
             </div>

@@ -36,7 +36,7 @@ export default function Single_details() {
 
     // refetchInterval: 5000, // 🔁 Refetch every 5 seconds (5000 ms)
   });
-  console.log(data, "data");
+  // console.log(data, "data");
 
   // Sample user data
   // ✅ Just added the missing membershipData block in userData
@@ -146,6 +146,7 @@ export default function Single_details() {
   //
 
   const deactiveNow = (id) => {
+    
     Swal.fire({
       title: "Are you sure?",
       text: "Make the membar deactive!",
@@ -166,6 +167,10 @@ export default function Single_details() {
       }
     });
   };
+
+
+
+
 
   return isLoading ? (
     <Loader></Loader>
