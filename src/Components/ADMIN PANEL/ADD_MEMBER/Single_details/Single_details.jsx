@@ -19,6 +19,7 @@ import DatePicker from "react-datepicker";
 import moment from "moment/moment";
 import { toast, ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
+import Loader from "../../../Loader/Loader";
 
 export default function Single_details() {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -167,7 +168,7 @@ export default function Single_details() {
   };
 
   return isLoading ? (
-    <h1 className="text-7xl">Loading</h1>
+    <Loader></Loader>
   ) : (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
       {/* Header */}

@@ -2,6 +2,7 @@ import { AuthContext } from "../logreg/AuthProvider";
 import { useContext, useState } from "react";
 import { Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router";
+import { toast, ToastContainer } from "react-toastify";
 // import auth from './firebase.init';
 
 export default function SignUpCom() {
@@ -19,7 +20,7 @@ export default function SignUpCom() {
 
     signUp(email, password)
       .then(() => {
-        alert("Sign up successful!");
+        toast.success('Successfully Login!')
         navigate("/admin");
         setEmail("");
         setPassword("");
@@ -60,6 +61,7 @@ export default function SignUpCom() {
             required
           />
         </div>
+       <ToastContainer></ToastContainer>
 
         {/* Password Field */}
         <div className="relative mb-6">

@@ -16,17 +16,20 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../logreg/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../AXIOS/useAxiosSecure";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function HomeDash() {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const { out, person } = useContext(AuthContext);
+  const { out} = useContext(AuthContext);
   const x = () => {
     out()
       .then(() => {
-        alert("Log out successful!");
+        // toast.success("log Out Done")
+        // alert("Log out successful!");
+        // setTimeout(() => navigate("/"), 1000);
         navigate("/"); // Navigate to home after logout
       })
       .catch((error) => {
@@ -40,7 +43,7 @@ export default function HomeDash() {
     { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
     { to: "/admin/d", icon: <FaDumbbell />, text: "Deactive Members" },
     { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
-    { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
+    { to: "/admin/due", icon: <FaTools />, text: "Due Members" },
     { to: "/admin/reports", icon: <FaClipboardList />, text: "Complaines" },
     { to: "#", icon: <FaSignOutAlt />, text: "Log Out" }, // We'll handle this separately
   ];
@@ -68,6 +71,7 @@ export default function HomeDash() {
           onClick={() => setIsOpen(false)}
         ></div>
       )}
+      <ToastContainer></ToastContainer>
 
       {/* Sidebar */}
       <aside

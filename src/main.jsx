@@ -12,6 +12,7 @@ import SignUpCom from "./Components/logreg/SignUpCom.jsx";
 import AuthProvider from "./Components/logreg/AuthProvider.jsx";
 import PrivateRoute from "./Components/logreg/PrivateRoute.jsx";
 import Deactive from "./Components/ADMIN PANEL/deactive/Deactive.jsx";
+import Due from "./Components/ADMIN PANEL/Due/Due.jsx";
 const root = document.getElementById("root");
 const queryClient = new QueryClient();
 ReactDOM.createRoot(root).render(
@@ -28,6 +29,7 @@ ReactDOM.createRoot(root).render(
           <Route path="mamber" element={<Member></Member>} />
           <Route path="add" element={<AddMember></AddMember>} />
           <Route path="d" element={<Deactive></Deactive>} />
+          <Route path="due" element={<Due></Due>} />
           <Route path="membar/:id" element={<Single_details></Single_details>} />
         </Route>
         {/* admin dashboard with outlet end*/}

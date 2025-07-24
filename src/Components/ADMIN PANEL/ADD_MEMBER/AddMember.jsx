@@ -274,7 +274,7 @@ export default function AddMember() {
           {/* Submit Buttons */}
           {load ? (
             <>
-              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+              <div className="flex flex-cTol sm:flex-row gap-4 mt-8">
                 <div className="flex justify-center items-center ">
                   <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-purple-500"></div>
                   <div className="animate-spin ease-linear rounded-full w-10 h-10 border-t-2 border-b-2 border-red-500 ml-3"></div>

@@ -44,10 +44,10 @@ const Footer = () => {
   Follow Us
 </h2>
 <div className="flex space-x-5">
-  <a href="#" className="hover:scale-110 transition-transform">
+  <a href="https://www.facebook.com/profile.php?id=61550820474044" className="hover:scale-110 transition-transform">
     <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" className="w-6 h-6" />
   </a>
-  <a href="#" className="hover:scale-110 transition-transform">
+  <a href="http://instagram.com/ng_fitness_gym" className="hover:scale-110 transition-transform">
     <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" className="w-6 h-6" />
   </a>
   

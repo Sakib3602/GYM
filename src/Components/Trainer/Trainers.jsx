@@ -56,12 +56,10 @@ const Trainers = () => {
             through consistency.
           </p>
           <div className="flex justify-center gap-4 mt-4">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <a href="https://www.facebook.com/madforfit1" target="_blank" rel="noreferrer">
               <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">
-              <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
-            </a>
+           
           </div>
         </div>
 
@@ -81,10 +79,10 @@ const Trainers = () => {
             transforming lives.
           </p>
           <div className="flex justify-center gap-4 mt-4">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <a href="https://www.facebook.com/ng.fit.2024" target="_blank" rel="noreferrer">
               <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/ng_fitness_gym" target="_blank" rel="noreferrer">
               <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
             </a>
           </div>
@@ -109,9 +107,7 @@ const Trainers = () => {
             <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <FaFacebook className="text-[#1877F2] w-6 h-6 hover:scale-110 transition" />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer">
-              <BsInstagram className="text-[#E4405F] w-6 h-6 hover:scale-110 transition" />
-            </a>
+            
           </div>
         </div>
       </div>
