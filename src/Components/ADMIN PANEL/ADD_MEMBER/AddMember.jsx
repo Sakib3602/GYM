@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
 import {
@@ -63,17 +63,20 @@ export default function AddMember() {
       // === Prepare the final form data ===
       const formData = {
         name: data.get("name"),
+        serial: data.get("serial"),
         phone: data.get("phone"),
         address: data.get("address"),
         responsiblePerson: data.get("responsiblePerson"),
         responsiblePersonNumber: data.get("responsiblePersonNumber"),
         memberPhotoUrl: imageUrl, // ✅ Cloudinary image URL
-        memberSheet: imageUrl2 || "https://res.cloudinary.com/dpwuivub7/image/upload/v1751990015/wzoeti7r7k55eoplc9pj.avif",
-        admiteDate: moment().format('MMMM Do YYYY, h:mm:ss a'),
-        payments : [],
-        active : "yes",
+        memberSheet:
+          imageUrl2 ||
+          "https://res.cloudinary.com/dpwuivub7/image/upload/v1751990015/wzoeti7r7k55eoplc9pj.avif",
+        admiteDate: moment().format("MMMM Do YYYY, h:mm:ss a"),
+        payments: [],
+        active: "yes",
       };
-      console.log(formData)
+      console.log(formData);
 
       mutationUP.mutate(formData);
 
@@ -89,6 +92,13 @@ export default function AddMember() {
     }
   };
   const axiosPub = useAxiosPublic();
+    const {data : serialNumber = [],refetch} = useQuery({
+    queryKey : ["serialnumber"],
+    queryFn : async()=> {
+      const res = await axiosPub.get("/serialNum");
+      return res.data;
+    }
+  })
 
   // tanstack query post
   const mutationUP = useMutation({
@@ -97,9 +107,19 @@ export default function AddMember() {
       return res.data;
     },
     onSuccess: () => {
+      refetch()
       toast.success("New Membar Added !.");
     },
   });
+
+
+
+  console.log(serialNumber[0]?.serial, "serial");
+
+
+
+
+
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2 sm:px-4 lg:px-8">
       <div className="max-w-2xl mx-auto">
@@ -117,6 +137,9 @@ export default function AddMember() {
               <p className="text-gray-600 text-base">
                 Fill in the member details below
               </p>
+              <p className="text-gray-600 text-base">
+                Last Serial Number : <span className="text-black text-xl font-extrabold">{serialNumber[0]?.serial}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -128,19 +151,19 @@ export default function AddMember() {
         >
           <div className="space-y-6">
             {/* serial */}
-            {/* <div>
+            <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <FaUser className="inline mr-2" />
                 Serial Number *
               </label>
               <input
                 type="text"
-                name="name"
+                name="serial"
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                placeholder="Give serial number"
+                placeholder="Give serial number any"
               />
-            </div> */}
+            </div>
             {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -195,7 +218,6 @@ export default function AddMember() {
                 </label>
                 <input
                   type="text"
-
                   name="responsiblePerson"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                   placeholder="Emergency contact name"
@@ -242,7 +264,6 @@ export default function AddMember() {
                   type="file"
                   onChange={(e) => setImg2(e.target.files[0])}
                   name="memberSheet"
-                  
                   accept="image/*"
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
                 />

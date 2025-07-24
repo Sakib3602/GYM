@@ -10,9 +10,12 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
+// import xx from "../../../assets/logo_ng.jpg"
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
 // import { useNavigate } from "react-router";
 import { AuthContext } from "../../logreg/AuthProvider";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../AXIOS/useAxiosSecure";
 
 export default function HomeDash() {
   const location = useLocation();
@@ -38,10 +41,23 @@ export default function HomeDash() {
     { to: "/admin/d", icon: <FaDumbbell />, text: "Deactive Members" },
     { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
     { to: "/admin/equipment", icon: <FaTools />, text: "Equipment" },
-    { to: "/admin/reports", icon: <FaClipboardList />, text: "Reports" },
+    { to: "/admin/reports", icon: <FaClipboardList />, text: "Complaines" },
     { to: "#", icon: <FaSignOutAlt />, text: "Log Out" }, // We'll handle this separately
   ];
-  console.log(person);
+  // console.log(person);
+  const axiosSecure = useAxiosSecure();
+  const { data } = useQuery({
+    queryKey: ["dash"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allmembar");
+      return res.data;
+    },
+  });
+
+  const active = data?.filter((m) => m?.active === "yes") || [];
+  
+  const dactive = data?.filter((m) => m?.active === "no") || [];
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -55,68 +71,55 @@ export default function HomeDash() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-30 w-64 min-h-screen bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:static`}
+        className={`fixed top-0 left-0 z-30 w-64 min-h-screen bg-white shadow-xl transform transition-transform duration-300 ease-in-out
+    ${
+      isOpen ? "translate-x-0" : "-translate-x-full"
+    } lg:translate-x-0 lg:static`}
       >
-        {/* Close button for mobile sidebar */}
-        <div className="p-5 flex items-center justify-between">
+        {/* Header Section */}
+        <div className="p-5 flex items-center justify-between border-b">
+          <Link
+            to="/"
+            className="hidden lg:flex items-center justify-center w-full"
+          >
+            <div className="h-12 px-6 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
+              NG FITNESS GYM
+            </div>
+          </Link>
+          {/* Close button for mobile */}
           <button
             onClick={() => setIsOpen(false)}
-            className="lg:hidden text-gray-600"
+            className="lg:hidden text-gray-600 hover:text-red-500 transition"
           >
             <FaTimes size={20} />
           </button>
         </div>
 
-        {/* Logo section */}
-        <div className="px-5 py-4 border-b hidden lg:flex items-center justify-center">
-         <Link to={"/"}> <div className="p-8  h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-lg">
-            NG FITNESS GYM
-          </div></Link>
-        </div>
-
-        {/* Sidebar links */}
-        <nav className="px-5 py-4 space-y-2">
+        {/* Navigation Links */}
+        <nav className="px-4 py-6 space-y-2">
           {links.map((link, index) => {
-            const isLogout = link.text === "Log Out"; // Check if this is the logout item
+            const isLogout = link.text === "Log Out";
 
             return (
               <NavLink
                 key={index}
-                to={isLogout ? "/" : link.to} // Don't navigate if it's logout
+                to={isLogout ? "/" : link.to}
                 end
                 onClick={() => {
-                  setIsOpen(false); // Close sidebar on mobile
-                  if (isLogout) {
-                    x(); // call logout only if it's the logout link
-                  }
-                  // if (isLogout) {
-                  //   // Show confirmation alert
-                  //   const confirmLogout = window.confirm(
-                  //     "Are you sure you want to log out?"
-                  //   );
-
-                  //   if (confirmLogout) {
-                  //     // Do actual logout logic here
-                  //     console.log("User logged out");
-
-                  //     // Example: clear token/local storage and redirect
-                  //     // localStorage.removeItem("authToken");
-                  //     window.location.href = "/"; // Redirect to home or login page
-                  //   }
-                  // }
+                  setIsOpen(false);
+                  if (isLogout) x();
                 }}
                 className={({ isActive }) =>
-                  `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition ${
-                    isActive
-                      ? "bg-blue-100 text-blue-700"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-blue-700"
-                  }`
+                  `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 
+            ${
+              isActive
+                ? "bg-blue-100 text-blue-700"
+                : "text-gray-700 hover:bg-gray-100 hover:text-blue-700"
+            }`
                 }
               >
-                <span className="text-lg">{link.icon}</span>
-                {link.text}
+                <span className="text-xl">{link.icon}</span>
+                <span className="tracking-wide">{link.text}</span>
               </NavLink>
             );
           })}
@@ -171,16 +174,22 @@ export default function HomeDash() {
             <div className="flex flex-col lg:flex-row gap-4">
               <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-blue-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
-                  Total Members
+                  Total Active Members
                 </h2>
-                <p className="text-3xl font-bold text-blue-600">150</p>
+                <p className="text-3xl font-bold text-blue-600">{active?.length}</p>
               </div>
 
+              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-black-500">
+                <h2 className="text-gray-600 text-sm font-semibold mb-2">
+                  Total Deactivate Complaints
+                </h2>
+                <p className="text-3xl font-bold text-red-600">{dactive?.length}</p>
+              </div>
               <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-red-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
                   Total Complaints
                 </h2>
-                <p className="text-3xl font-bold text-red-600">7</p>
+                <p className="text-3xl font-bold text-red-600"></p>
               </div>
 
               <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-green-500">

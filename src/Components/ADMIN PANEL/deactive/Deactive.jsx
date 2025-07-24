@@ -27,7 +27,12 @@ const Deactive = () => {
       return res.data;
     },
   });
-  console.log(members);
+  // console.log(members);
+  const dataFill = members.filter((m)=> m?.active === "no")
+
+  console.log(dataFill.length,"lemgth")
+
+  
 
   // const mutationUP = useMutation({
   //     mutationFn: async (formData) => {
@@ -47,7 +52,7 @@ const Deactive = () => {
   }, [searchTerm]);
   // Fuse.js search handler
   const handleSearch = () => {
-    const fuse = new Fuse(members, {
+    const fuse = new Fuse(dataFill, {
       keys: ["name", "phone"], // searchable fields
       threshold: 0.3,
     });
@@ -59,10 +64,10 @@ const Deactive = () => {
 
   if (isLoading) return <Loader></Loader>;
 
-  const dataToShow = filteredMembers || members;
+  const dataToShow = filteredMembers || dataFill;
 
   return (
-    <div className="p-5 bg-black">
+    <div className="p-5 min-h-screen bg-black">
       {/* Search Input */}
       <div className="flex justify-center mb-6">
         <input

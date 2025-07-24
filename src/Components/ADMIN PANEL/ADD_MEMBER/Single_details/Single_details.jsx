@@ -26,7 +26,7 @@ export default function Single_details() {
   const axiosSecure = useAxiosSecure();
   const params = useParams();
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data  , isLoading, refetch } = useQuery({
     queryKey: ["single_details"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/allmembar/${params.id}`);
@@ -42,6 +42,7 @@ export default function Single_details() {
 
   const userData = {
     name: data?.name,
+    serial : data?.serial,
     ide: data?._id,
     address: data?.address,
     phone: data?.phone,
@@ -124,25 +125,46 @@ export default function Single_details() {
     },
   });
 
-
   // update
 
   const ac = (id) => {
     console.log("active yo", id);
     mutationUp.mutate({ id, msg: "yes" }); // sending an object
   };
- 
+
   const mutationUp = useMutation({
     mutationFn: async ({ id, msg }) => {
       const res = await axiosSecure.patch(`/allmembar/staus/${id}`, { msg });
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Member Activated !")
+      toast.success("Active Status Changed!");
       refetch();
     },
   });
   //
+
+  const deactiveNow = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Make the membar deactive!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, deactive it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutationUp.mutate({ id, msg: "no" });
+
+        Swal.fire({
+          title: "Deactivated!",
+          text: "Membar Deactivated Done.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return isLoading ? (
     <h1 className="text-7xl">Loading</h1>
@@ -196,8 +218,11 @@ export default function Single_details() {
                     {userData?.name}
                   </h2>
                   {userData?.yo === "yes" ? (
-                    <div className="inline-flex items-center px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-green-100 text-green-800">
-                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                    <div
+                      onClick={() => deactiveNow(userData?.ide)}
+                      className="cursor-pointer inline-flex items-center px-4 py-4 rounded-full text-xs sm:text-sm font-medium bg-green-100 text-green-800"
+                    >
+                      <div className="w-2 h-2 bg-green-500 rounded-full mr-2 "></div>
                       Active Member
                     </div>
                   ) : (
@@ -362,10 +387,11 @@ export default function Single_details() {
                   <div className="text-center p-6 sm:p-8 bg-blue-50 rounded-xl">
                     <FaTrophy className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 mx-auto mb-3 sm:mb-4" />
                     <p className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                      {userData.membershipData.membershipType}
+                      {userData?.serial}
+                      
                     </p>
                     <p className="text-sm sm:text-base text-gray-600 font-medium">
-                      Membership Type
+                      Membership Serial
                     </p>
                   </div>
 
