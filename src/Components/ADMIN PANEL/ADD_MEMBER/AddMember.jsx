@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+import { LuClipboardList } from "react-icons/lu";
 import {
   FaUser,
   FaPhone,
@@ -63,6 +64,7 @@ export default function AddMember() {
       // === Prepare the final form data ===
       const formData = {
         name: data.get("name"),
+        NID: data.get("NID"),
         serial: data.get("serial"),
         phone: data.get("phone"),
         address: data.get("address"),
@@ -191,6 +193,19 @@ export default function AddMember() {
                 required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
                 placeholder="+8801XXXXXXXXX"
+              />
+            </div>
+            {/* NID */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                <LuClipboardList className="inline mr-2" />
+                NID Number *
+              </label>
+              <input
+                type="number"
+                name="NID"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
+                placeholder="XXXXXXXXXXXX"
               />
             </div>
 

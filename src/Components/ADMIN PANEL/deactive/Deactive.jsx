@@ -34,17 +34,6 @@ const Deactive = () => {
 
   
 
-  // const mutationUP = useMutation({
-  //     mutationFn: async (formData) => {
-  //       const res = await axiosPub.post("/allmembar", formData);
-  //       return res.data;
-  //     },
-  //     onSuccess: () => {
-  //       toast.success("New Membar Added !.");
-  //     },
-  //   });
-  
-
   useEffect(() => {
     if (!searchTerm.trim()) {
       setFilteredMembers(null); // Show all data

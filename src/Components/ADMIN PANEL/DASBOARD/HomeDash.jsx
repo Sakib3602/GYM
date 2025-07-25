@@ -10,13 +10,13 @@ import {
   FaBars,
   FaTimes,
 } from "react-icons/fa";
-// import xx from "../../../assets/logo_ng.jpg"
+import { FaPersonCircleExclamation } from "react-icons/fa6";
 import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router";
-// import { useNavigate } from "react-router";
 import { AuthContext } from "../../logreg/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../AXIOS/useAxiosSecure";
-import { toast, ToastContainer } from "react-toastify";
+import Chart from "./Chart/Chart";
+
 
 export default function HomeDash() {
   const location = useLocation();
@@ -40,11 +40,12 @@ export default function HomeDash() {
   // Sidebar navigation links
   const links = [
     { to: "/admin", icon: <FaHome />, text: "Dashboard" },
-    { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
-    { to: "/admin/d", icon: <FaDumbbell />, text: "Deactive Members" },
     { to: "/admin/add", icon: <FaUserTie />, text: "Add Memeber" },
+    { to: "/admin/mamber", icon: <FaUsers />, text: "Members" },
     { to: "/admin/due", icon: <FaTools />, text: "Due Members" },
-    { to: "/admin/reports", icon: <FaClipboardList />, text: "Complaines" },
+     { to: "/admin/d", icon: <FaDumbbell />, text: "Deactive Members" },
+    { to: "/admin/deactiveDue", icon: <FaPersonCircleExclamation />, text: "Deactive Due Members" },
+    // { to: "/admin/reports", icon: <FaClipboardList />, text: "Complaines" },
     { to: "#", icon: <FaSignOutAlt />, text: "Log Out" }, // We'll handle this separately
   ];
   // console.log(person);
@@ -71,7 +72,7 @@ export default function HomeDash() {
           onClick={() => setIsOpen(false)}
         ></div>
       )}
-      <ToastContainer></ToastContainer>
+      
 
       {/* Sidebar */}
       <aside
@@ -86,7 +87,7 @@ export default function HomeDash() {
             to="/"
             className="hidden lg:flex items-center justify-center w-full"
           >
-            <div className="h-12 px-6 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md">
+            <div className="h-12 px-6  text-black rounded-full flex items-center justify-center font-bold text-lg shadow-md">
               NG FITNESS GYM
             </div>
           </Link>
@@ -149,16 +150,16 @@ export default function HomeDash() {
         {/* Dashboard welcome banner (only on /admin route) */}
         {location.pathname === "/admin" && (
           <div className="m-4">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-4 sm:p-6 md:p-8 lg:p-10 text-white w-full">
+            <div className="bg-gradient-to-r from-black-600 to-purple-400 rounded-lg p-4 sm:p-6 md:p-8 lg:p-10 text-black w-full">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
                 <div className="flex-1 min-w-0">
                   <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-2 sm:mb-3 leading-tight">
                     Welcome back, Nitto!
                   </h1>
-                  <p className="text-blue-100 text-sm sm:text-base md:text-lg lg:text-xl mb-1 sm:mb-2">
+                  <p className="text-white-100 text-sm sm:text-base md:text-lg lg:text-xl mb-1 sm:mb-2">
                     Here's a quick overview of your gym today
                   </p>
-                  <p className="text-blue-200 text-xs sm:text-sm md:text-base">
+                  <p className="text-white-200 text-xs sm:text-sm md:text-base">
                     {new Date().toLocaleDateString("en-US", {
                       weekday: "long",
                       year: "numeric",
@@ -176,7 +177,7 @@ export default function HomeDash() {
         {location.pathname === "/admin" && (
           <div className="p-4">
             <div className="flex flex-col lg:flex-row gap-4">
-              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-blue-500">
+              {/* <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-blue-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
                   Total Active Members
                 </h2>
@@ -185,24 +186,28 @@ export default function HomeDash() {
 
               <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-black-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
-                  Total Deactivate Complaints
+                  Total Deactivate Members
                 </h2>
                 <p className="text-3xl font-bold text-red-600">{dactive?.length}</p>
-              </div>
-              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-red-500">
+              </div> */}
+              {/* <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-red-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
                   Total Complaints
                 </h2>
                 <p className="text-3xl font-bold text-red-600"></p>
-              </div>
+              </div> */}
 
-              <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-green-500">
+              {/* <div className="flex-1 bg-white rounded-xl shadow hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-6 border-l-4 border-green-500">
                 <h2 className="text-gray-600 text-sm font-semibold mb-2">
                   Total Reviews
                 </h2>
                 <p className="text-3xl font-bold text-green-600">85</p>
-              </div>
+              </div> */}
             </div>
+            <div>
+              <Chart name={active} name2={dactive}></Chart>
+            </div>
+           
           </div>
         )}
 

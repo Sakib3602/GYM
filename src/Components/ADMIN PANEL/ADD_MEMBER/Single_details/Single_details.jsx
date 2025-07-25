@@ -9,6 +9,7 @@ import {
   FaCalendarAlt,
   FaTrophy,
 } from "react-icons/fa";
+import { LuClipboardList } from "react-icons/lu";
 import "react-datepicker/dist/react-datepicker.css";
 
 import useAxiosSecure from "../../../AXIOS/useAxiosSecure";
@@ -36,13 +37,11 @@ export default function Single_details() {
 
     // refetchInterval: 5000, // 🔁 Refetch every 5 seconds (5000 ms)
   });
-  // console.log(data, "data");
-
-  // Sample user data
-  // ✅ Just added the missing membershipData block in userData
+  console.log(data?.NID);
 
   const userData = {
     name: data?.name,
+    NID: data?.NID,
     serial: data?.serial,
     ide: data?._id,
     address: data?.address,
@@ -129,30 +128,38 @@ export default function Single_details() {
   // update
 
   const ac = (id) => {
-     const admit =  moment().format("MMMM Do YYYY, h:mm:ss a")
+    const admit = moment().format("MMMM Do YYYY, h:mm:ss a");
+    const s = moment().format("MMMM Do YYYY, h:mm:ss a");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Make the membar  active!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Active This User!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutationUp.mutate({ id, msg: "yes", admiteDate: admit, deactive: s }); // sending an object
 
-    mutationUp.mutate({ id, msg: "yes", admiteDate : admit }); // sending an object
+        Swal.fire({
+          title: "Activated!",
+          text: "Membar Deactivated Done.",
+          icon: "success",
+        });
+      }
+    });
   };
 
-  // const mutationUp = useMutation({
-  //   mutationFn: async ({ id, msg }) => {
-  //     const res = await axiosSecure.patch(`/allmembar/staus/${id}`, { msg });
-  //     return res.data;
-  //   },
-  //   onSuccess: () => {
-  //     toast.success("Active Status Changed!");
-  //     refetch();
-  //   },
-  // });
-  //
- 
-
   const mutationUp = useMutation({
-    mutationFn: async ({ id, msg, admiteDate }) => {
+    mutationFn: async ({ id, msg, admiteDate, deactive }) => {
       const payload = { msg }; // always send active
 
       if (admiteDate) {
         payload.admiteDate = admiteDate; // send only if available
+      }
+      if (deactive) {
+        payload.deactive = deactive; // send only if available
       }
 
       const res = await axiosSecure.patch(`/allmembar/staus/${id}`, payload);
@@ -165,6 +172,7 @@ export default function Single_details() {
   });
 
   const deactiveNow = (id) => {
+    const s = moment().format("MMMM Do YYYY, h:mm:ss a");
     Swal.fire({
       title: "Are you sure?",
       text: "Make the membar deactive!",
@@ -175,7 +183,7 @@ export default function Single_details() {
       confirmButtonText: "Yes, deactive it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        mutationUp.mutate({ id, msg: "no" });
+        mutationUp.mutate({ id, msg: "no", deactive: s });
 
         Swal.fire({
           title: "Deactivated!",
@@ -314,7 +322,7 @@ export default function Single_details() {
                     </h4>
                   </div>
                   <p className="text-lg sm:text-xl font-semibold text-gray-900 ml-11 sm:ml-13">
-                    {userData.name}
+                    {userData?.name}
                   </p>
                 </div>
 
@@ -329,7 +337,7 @@ export default function Single_details() {
                     </h4>
                   </div>
                   <p className="text-lg sm:text-xl font-semibold text-gray-900 ml-11 sm:ml-13">
-                    {userData.phone}
+                    {userData?.phone}
                   </p>
                 </div>
 
@@ -345,6 +353,19 @@ export default function Single_details() {
                   </div>
                   <p className="text-lg sm:text-xl font-semibold text-gray-900 ml-11 sm:ml-13 leading-relaxed">
                     {userData.address}
+                  </p>
+                </div>
+                <div className="group sm:col-span-2">
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-50 group-hover:bg-red-100 rounded-lg flex items-center justify-center transition-colors">
+                      <LuClipboardList className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" />
+                    </div>
+                    <h4 className="text-sm sm:text-base font-medium text-gray-500 uppercase tracking-wide">
+                      NID Number
+                    </h4>
+                  </div>
+                  <p className="text-lg sm:text-xl font-semibold text-gray-900 ml-11 sm:ml-13 leading-relaxed">
+                    {userData?.NID}
                   </p>
                 </div>
 
