@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import useAxiosSecure from "../../AXIOS/useAxiosSecure";
 import moment from "moment";
+import { Link } from "react-router";
+
 
 const Due = () => {
   const axiosSec = useAxiosSecure();
@@ -14,23 +15,11 @@ const Due = () => {
     },
   });
 
-  // Get the last full month from today
   const lastFullMonth = moment().subtract(1, "month").startOf("month");
 
-  // Calculate due months for each user
   const getDueMonths = (user) => {
-    // if (!user.admiteDate) {
-    //   console.warn("Missing admitDate for user:", user.name);
-    //   return [];
-    // }
+    const admitDate = moment(user.admiteDate, "MMMM Do YYYY, h:mm:ss a").startOf("month");
 
-    // Parse admitDate with proper format including ordinal
-    const admitDate = moment(
-      user.admiteDate,
-      "MMMM Do YYYY, h:mm:ss a"
-    ).startOf("month");
-
-    // Parse payments accordingly
     const paidMonths = user.payments.map((date) =>
       moment(date, "MMMM Do YYYY, h:mm:ss a").format("YYYY-MM")
     );
@@ -44,88 +33,93 @@ const Due = () => {
       loopDate.add(1, "month");
     }
 
-    const dueMonths = expectedMonths.filter(
-      (month) => !uniquePaidMonths.has(month)
-    );
-
-    return dueMonths;
+    return expectedMonths.filter((month) => !uniquePaidMonths.has(month));
   };
 
-  const DueUsers = users.filter((user) => getDueMonths(user).length > 0);
-  console.log(DueUsers);
+  const DueUsers = users.filter((user) => getDueMonths(user).length > 0)
+  const onlyActive = DueUsers.filter(users => users?.active === "yes");
+  console.log(onlyActive)
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="text-center mb-10">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-700">
-          🧾 User Due Payment List
-        </h1>
-      </div>
+    <div className="min-h-screen bg-[#f8fafc] px-6 py-10">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-10 text-center">
+          <h1 className="text-4xl font-extrabold text-gray-800">
+            🧾Active Members with Due Payments
+          </h1>
+          <p className="text-gray-500 mt-2 text-sm md:text-base">
+            Total Active Members with Dues: <strong>{onlyActive?.length}</strong>
+          </p>
+        </header>
 
-      <div className="grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {DueUsers?.map((user) => {
-          const dueMonths = getDueMonths(user);
+        {onlyActive?.length === 0 ? (
+          <div className="text-center mt-20 text-green-600 text-lg font-semibold">
+            ✅ All members are up to date with payments!
+          </div>
+        ) : (
+          <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {onlyActive?.map((user) => {
+              const dueMonths = getDueMonths(user);
+              return (
+                <Link to={`/admin/membar/${user?._id}`} key={user._id}>
+                  <div className="bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full">
+                    <div className="p-6">
+                      {/* Top */}
+                      <div className="flex items-center gap-4 mb-4">
+                        <img
+                          src={user.memberPhotoUrl}
+                          alt="member"
+                          className="w-16 h-16 rounded-full object-cover border-2 border-indigo-400"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src =
+                              "https://via.placeholder.com/100?text=No+Image";
+                          }}
+                        />
+                        <div>
+                          <h2 className="text-xl font-semibold text-gray-900">
+                            {user.name}
+                          </h2>
+                          <p className="text-sm text-gray-500">📞 {user.phone}</p>
+                          <p className="text-sm text-gray-500">📍 {user.address}</p>
+                        </div>
+                      </div>
 
-          return (
-            <div
-              key={user._id}
-              className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 flex flex-col items-center text-center hover:shadow-2xl transition-shadow duration-300"
-            >
-              {/* Member Photo */}
-              <img
-                src={user.memberPhotoUrl}
-                alt={`${user.name} photo`}
-                className="w-28 h-28 rounded-full object-cover border-4 border-indigo-500 mb-4 shadow-md"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://via.placeholder.com/112?text=No+Image";
-                }}
-              />
-
-              {/* User Info */}
-              <h2 className="text-2xl font-semibold text-gray-900">
-                {user.name}
-              </h2>
-              <p className="text-gray-600 mt-1">📞 {user.phone}</p>
-              <p className="text-gray-600">{user.address}</p>
-
-              {/* Due Info */}
-              <div className="mt-6 w-full">
-                {dueMonths.length > 0 ? (
-                  <>
-                    <p className="text-red-600 font-bold mb-3 text-lg">
-                      ❌ Missed Payments
-                    </p>
-                    <p className="mb-2 font-medium text-gray-700">
-                      📆 Due Months:
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      {dueMonths.map((month) => (
-                        <span
-                          key={month}
-                          className="bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full shadow"
-                        >
-                          {month}
-                        </span>
-                      ))}
+                      {/* Due Info */}
+                      <div>
+                        <p className="text-sm font-medium text-gray-700 mb-2">
+                          📆 Due Months:
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-3">
+                          {dueMonths.map((month) => (
+                            <span
+                              key={month}
+                              className="bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full font-semibold"
+                            >
+                              {month}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="text-sm font-semibold text-gray-800">
+                          🧮 Total Due:{" "}
+                          <span className="text-red-600 text-base">
+                            {dueMonths.length}
+                          </span>{" "}
+                          month{dueMonths.length > 1 ? "s" : ""}
+                        </p>
+                      </div>
                     </div>
-                    <p className="mt-3 font-semibold text-gray-800">
-                      🧮 Total Due:{" "}
-                      <span className="text-red-600">{dueMonths.length}</span>{" "}
-                      month
-                      {dueMonths.length > 1 ? "s" : ""}
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-green-600 font-semibold text-lg">
-                    ✅ No Dues
-                  </p>
-                )}
-              </div>
-            </div>
-          );
-        })}
+
+                    {/* Bottom hoverable footer */}
+                    <div className="bg-gray-100 text-center py-3 rounded-b-xl text-sm text-indigo-600 font-medium hover:bg-indigo-50 transition">
+                      View Member Profile →
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </section>
+        )}
       </div>
     </div>
   );

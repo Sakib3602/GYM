@@ -27,7 +27,7 @@ export default function Single_details() {
   const axiosSecure = useAxiosSecure();
   const params = useParams();
 
-  const { data  , isLoading, refetch } = useQuery({
+  const { data, isLoading, refetch } = useQuery({
     queryKey: ["single_details"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/allmembar/${params.id}`);
@@ -43,7 +43,7 @@ export default function Single_details() {
 
   const userData = {
     name: data?.name,
-    serial : data?.serial,
+    serial: data?.serial,
     ide: data?._id,
     address: data?.address,
     phone: data?.phone,
@@ -129,24 +129,42 @@ export default function Single_details() {
   // update
 
   const ac = (id) => {
-    console.log("active yo", id);
-    mutationUp.mutate({ id, msg: "yes" }); // sending an object
+     const admit =  moment().format("MMMM Do YYYY, h:mm:ss a")
+
+    mutationUp.mutate({ id, msg: "yes", admiteDate : admit }); // sending an object
   };
 
+  // const mutationUp = useMutation({
+  //   mutationFn: async ({ id, msg }) => {
+  //     const res = await axiosSecure.patch(`/allmembar/staus/${id}`, { msg });
+  //     return res.data;
+  //   },
+  //   onSuccess: () => {
+  //     toast.success("Active Status Changed!");
+  //     refetch();
+  //   },
+  // });
+  //
+ 
+
   const mutationUp = useMutation({
-    mutationFn: async ({ id, msg }) => {
-      const res = await axiosSecure.patch(`/allmembar/staus/${id}`, { msg });
+    mutationFn: async ({ id, msg, admiteDate }) => {
+      const payload = { msg }; // always send active
+
+      if (admiteDate) {
+        payload.admiteDate = admiteDate; // send only if available
+      }
+
+      const res = await axiosSecure.patch(`/allmembar/staus/${id}`, payload);
       return res.data;
     },
     onSuccess: () => {
-      toast.success("Active Status Changed!");
+      toast.success("Active status updated");
       refetch();
     },
   });
-  //
 
   const deactiveNow = (id) => {
-    
     Swal.fire({
       title: "Are you sure?",
       text: "Make the membar deactive!",
@@ -167,10 +185,6 @@ export default function Single_details() {
       }
     });
   };
-
-
-
-
 
   return isLoading ? (
     <Loader></Loader>
@@ -394,7 +408,6 @@ export default function Single_details() {
                     <FaTrophy className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 mx-auto mb-3 sm:mb-4" />
                     <p className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
                       {userData?.serial}
-                      
                     </p>
                     <p className="text-sm sm:text-base text-gray-600 font-medium">
                       Membership Serial
