@@ -1,14 +1,3 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
 # NG Fitness Gym Management System
 
 A modern, full-featured web application for managing gym memberships, trainers, payments, and more. Built with React and Vite, this project provides an intuitive admin panel, user authentication, gallery, reviews, and a responsive design for both gym staff and members.
@@ -79,7 +68,7 @@ src/
 
 A live demo of the NG Fitness Gym Management System is available here:
 
-[Live Demo Link](https://your-live-demo-url.com)
+[Live Demo Link](https://nggym.netlify.app/))
 
 > **Note:** Replace the above link with your deployed app URL (e.g., Vercel, Netlify, or your custom domain).
 
@@ -87,14 +76,5 @@ A live demo of the NG Fitness Gym Management System is available here:
 
 - For Firebase authentication, create a `.env` file in the root and add your Firebase config variables as shown in `src/Components/logreg/firebase.init.js`.
 
-## Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
-
-## License
-
-[MIT](LICENSE)
-
----
 
 **Developed by Sakib3602 and contributors.**
