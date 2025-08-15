@@ -1,67 +1,100 @@
-# GYM
+# React + Vite
 
-A modern, lightweight web application built with **React** and **Vite**, styled with **CSS**, designed to deliver a smooth and fast user experience.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-##  Table of Contents
+Currently, two official plugins are available:
 
-- [Overview](#overview)
-- [Demo](#demo)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Folder Structure](#folder-structure)
-- [Scripts](#scripts)
-- [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
 
----
+## Expanding the ESLint configuration
 
-## Overview
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-This project serves as a simple yet scalable foundation for building React-based single-page applications (SPAs) with fast refresh and minimal setup using Vite.
+# NG Fitness Gym Management System
 
-*(Add your own purpose here: e.g., “GYM is designed to help users find local fitness centers...”, etc.)*
-
-## Demo
-
-Provide a link or GIF of your app in action:
-
-- **Live Demo**: https://your-project-host.netlify.app (or GitHub Pages)
-- **Screenshot/GIF**:
-
-  ![App in action](link-to-screenshot-or-gif)
+A modern, full-featured web application for managing gym memberships, trainers, payments, and more. Built with React and Vite, this project provides an intuitive admin panel, user authentication, gallery, reviews, and a responsive design for both gym staff and members.
 
 ## Features
 
-- ⭐ React with Vite dev server for instant reloads
--  ESLint integration for clean, consistent code
--  Extensible setup (add TypeScript, Tailwind, or other tools easily)
--  Built-in build process for production
+- **Admin Panel**: Manage members, trainers, due payments, and deactivated accounts.
+- **Member Management**: Add, view, and update member details. View single member cards and details.
+- **Dashboard**: Visualize gym statistics with charts and summaries.
+- **Due Management**: Track and manage due payments and deactivated dues.
+- **Authentication**: Secure login and registration using Firebase.
+- **Gallery**: Showcase gym photos and events.
+- **Contact & Reviews**: Contact form and review section for user feedback.
+- **Live Chat**: Integrated TawkTo chat for real-time support.
+- **Responsive Design**: Works seamlessly on desktop and mobile devices.
 
-## Prerequisites
+## Project Structure
 
-To run this project, you'll need:
+```
+public/           # Static assets
+src/
+  index.css       # Global styles
+  main.jsx        # App entry point
+  Components/
+	 ADMIN PANEL/  # Admin features (Add Member, Dashboard, Due, etc.)
+	 AXIOS/        # Axios hooks for API calls
+	 Contact/      # Contact form
+	 Deal/         # Pricing components
+	 Footer/       # Footer section
+	 Four0Four/    # 404 error page
+	 Gellary/      # Gallery section
+	 Loader/       # Loading spinner
+	 logreg/       # Auth, Firebase, PrivateRoute, Signup
+	 Main_Home/    # Main homepage and slider
+	 Nav/          # Navigation bar
+	 ReviewC/      # Reviews
+	 Services/     # Services offered
+	 TawkToChat/   # Live chat integration
+	 Trainer/      # Trainer profiles
+```
 
-- [Node.js](https://nodejs.org/) (v16 or newer recommended)
-- npm or yarn package manager
+## Installation
 
-## Getting Started
+1. **Clone the repository:**
 
-```bash
-# Clone the repository
-git clone https://github.com/Sakib3602/GYM.git
-cd GYM
+	```powershell
+	git clone https://github.com/Sakib3602/GYM.git
+	cd ng_fitness
+	```
 
-# Install dependencies
-npm install
-# Or
-yarn install
+2. **Install dependencies:**
 
-# Start development server
-npm run dev
-# Or
-yarn dev
+	```powershell
+	npm install
+	```
 
-# Build for production
-npm run build
+3. **Start the development server:**
+
+	```powershell
+	npm run dev
+	```
+
+4. **Open in your browser:**
+
+	Visit [http://localhost:5173](http://localhost:5173) to view the app.
+
+## Live Demo
+
+A live demo of the NG Fitness Gym Management System is available here:
+
+[Live Demo Link](https://your-live-demo-url.com)
+
+> **Note:** Replace the above link with your deployed app URL (e.g., Vercel, Netlify, or your custom domain).
+
+## Environment Variables
+
+- For Firebase authentication, create a `.env` file in the root and add your Firebase config variables as shown in `src/Components/logreg/firebase.init.js`.
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](LICENSE)
+
+---
+
+**Developed by Sakib3602 and contributors.**
